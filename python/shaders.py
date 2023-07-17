@@ -4,8 +4,6 @@ def vertexShader(vertex, **kwargs):
     
     vt = modelMatrix @ vt
     
-    vt = vt.tolist()[0]
-    
     vt = [vt[0]/vt[3],vt[1]/vt[3],vt[2]/vt[3]]
     return vt
 

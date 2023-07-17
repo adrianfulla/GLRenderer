@@ -3,9 +3,9 @@ import shaders
 import random
 
 
-width = 1080
+width = 3840
 
-height = 1080
+height = 2160
 
 rend = Renderer(width,height)
 
@@ -79,7 +79,10 @@ rend.glModelMatrix(translate = (width/2, height/2,0))
 rend.vertexShader = shaders.vertexShader
 rend.fragmentShader = shaders.fragmentShader
 
-rend.glLoadModel("model.obj", translate = (width/2, height/2,0), scale = (200, 200,0))
+rend.glLine(V3(0,height/2,0),V3(width,height/2,0))
+rend.glLine(V3(width/2,0,0),V3(width/2,height,0))
+
+rend.glLoadModel("GLS.obj", translate = (width/30, height/30,0), scale = (1000, 1000,0))
 
 rend.glRender()
 
