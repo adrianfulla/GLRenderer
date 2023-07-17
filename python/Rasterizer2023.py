@@ -1,7 +1,10 @@
-from gl import Renderer, V2, color
+from gl import Renderer, V2,V3, color
+import shaders
 import random
 
+
 width = 1080
+
 height = 1080
 
 rend = Renderer(width,height)
@@ -42,30 +45,42 @@ rend.glLine(V2(0,0), V2(10, 250)) """
                                      random.random(),
                                      random.random())) """
 
-#Patron 5 (Estrellas)
-for x in range(width):  
-    for y in range(height):
-        if random.random() > 0.995:
-            size= random.randrange(0, 3)
-            brigthness= random.random() / 2 + 0.5
-            starColor= color(brigthness, brigthness, brigthness)
+# #Patron 5 (Estrellas)
+# for x in range(width):  
+#     for y in range(height):
+#         if random.random() > 0.995:
+#             size= random.randrange(0, 3)
+#             brigthness= random.random() / 2 + 0.5
+#             starColor= color(brigthness, brigthness, brigthness)
+# 
+#             if size== 0:
+#                 rend.glPoint(x, y, starColor)
+# 
+#             elif size== 1:
+#                 rend.glPoint(x, y, starColor)
+#                 rend.glPoint(x+1, y, starColor)
+#                 rend.glPoint(x, y+1, starColor)
+#                 rend.glPoint(x+1, y+1, starColor)
+# 
+#             elif size==2:
+#                 rend.glPoint(x, y, starColor)
+#                 rend.glPoint(x+1, y, starColor)
+#                 rend.glPoint(x, y+1, starColor)
+#                 rend.glPoint(x+1, y+1, starColor)
+#                 rend.glPoint(x+2, y, starColor)
+#                 rend.glPoint(x, y+2, starColor)                
+#                 rend.glPoint(x+2, y+2, starColor)
 
-            if size== 0:
-                rend.glPoint(x, y, starColor)
+triangle= [V3(0,0,0), V3(50,0,0),V3(35,40,0)]
 
-            elif size== 1:
-                rend.glPoint(x, y, starColor)
-                rend.glPoint(x+1, y, starColor)
-                rend.glPoint(x, y+1, starColor)
-                rend.glPoint(x+1, y+1, starColor)
+rend.glAddVertices(triangle)
+rend.glModelMatrix(translate = (width/2, height/2,0))
 
-            elif size==2:
-                rend.glPoint(x, y, starColor)
-                rend.glPoint(x+1, y, starColor)
-                rend.glPoint(x, y+1, starColor)
-                rend.glPoint(x+1, y+1, starColor)
-                rend.glPoint(x+2, y, starColor)
-                rend.glPoint(x, y+2, starColor)                
-                rend.glPoint(x+2, y+2, starColor)
+rend.vertexShader = shaders.vertexShader
+rend.fragmentShader = shaders.fragmentShader
+
+rend.glLoadModel("model.obj", translate = (width/2, height/2,0), scale = (200, 200,0))
+
+rend.glRender()
 
 rend.glFinish("output.bmp")
