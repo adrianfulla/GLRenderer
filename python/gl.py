@@ -148,7 +148,7 @@ class Renderer(object):
 
         transformedVerts = []
         for model in self.objects:
-            modelMatrix = self.glModelMatrix(model.translate, model.scale)
+            modelMatrix = self.glModelMatrix(model.translate, model.rotate, model.scale)
 
         count = 0
         for face in model.faces:
@@ -215,7 +215,7 @@ class Renderer(object):
 
         return primitives
 
-    def glModelMatrix(self, translate=(0, 0, 0), rotate=(0, 0, 0),scale=(1, 1, 1)):
+    def glModelMatrix(self, translate=(0, 0, 0), rotate=(0, 0, 0), scale=(1, 1, 1)):
         translation = nnp.Matrix([[1, 0, 0, translate[0]],
                                   [0, 1, 0, translate[1]],
                                   [0, 0, 1, translate[2]],
@@ -225,21 +225,21 @@ class Renderer(object):
                             [0, 0, scale[2], 0],
                             [0, 0, 0, 1]])
         rotateX = nnp.Matrix([[1, 0, 0, 0],
-                            [0, cos(rotate[0]), -sin(rotate[0]), 0],
-                            [0, sin(rotate[0]), cos(rotate[0]), 0],
-                            [0, 0, 0, 1]])
+                              [0, cos(rotate[0]), -sin(rotate[0]), 0],
+                              [0, sin(rotate[0]), cos(rotate[0]), 0],
+                              [0, 0, 0, 1]])
         rotateY = nnp.Matrix([[cos(rotate[1]), 0, sin(rotate[1]), 0],
                               [0, 1, 0, 0],
                               [-sin(rotate[1]), 0, cos(rotate[1]), 0],
                               [0, 0, 0, 1]])
         rotateZ = nnp.Matrix([[cos(rotate[2]), -sin(rotate[2]), 0, 0],
-                              [sin(rotate[2]),cos(rotate[2]) ,0 , 0],
+                              [sin(rotate[2]), cos(rotate[2]), 0, 0],
                               [0, 0, 1, 0],
                               [0, 0, 0, 1]])
 
-        rotate = rotateX * rotateY * rotateZ
+        rotation = rotateZ * rotateY * rotateX
 
-        self.modelMatrix = translation  * scale
+        self.modelMatrix = translation * rotation * scale
         return self.modelMatrix
 
     def glFinish(self, filename):

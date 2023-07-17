@@ -1,35 +1,34 @@
-from gl import Renderer, V2,V3, color
+from gl import Renderer, V2, V3, color
 import shaders
 import random
-
 
 width = 3840
 
 height = 2160
 
-rend = Renderer(width,height)
+rend = Renderer(width, height)
 
 rend.glClearColor(0, 0, 0)
 rend.glClear()
 
-#Dibuja un punto
+# Dibuja un punto
 """ rend.glColor(1,1,1)
 rend.glPoint(250,250) """
 
-#Dibuja una linea
+# Dibuja una linea
 """ rend.glColor(0.5, 0.9, 0.2)
 rend.glLine(V2(0,0), V2(10, 250)) """
 
-#Patron 1 (abajo hacia arriba, izquierda derecha)
+# Patron 1 (abajo hacia arriba, izquierda derecha)
 """ for x in range(0, width, 25):
     rend.glLine(V2(0,0), V2(x, height - 1)) """
 
-#Patron 2 (arriba hacia abajo, izquierda derecha)
+# Patron 2 (arriba hacia abajo, izquierda derecha)
 """ for x in range(0, width, 25):
     rend.glColor(1, 0, 0)
     rend.glLine(V2(0,height - 1), V2(x, 0)) """
 
-#Patron 3 (static)
+# Patron 3 (static)
 """ for x in range(width):
     for y in range(height):
         if random.random() > 0.5:
@@ -37,7 +36,7 @@ rend.glLine(V2(0,0), V2(10, 250)) """
             rend.glPoint(x, y)
  """
 
-#Patron 4 (Color static)
+# Patron 4 (Color static)
 """ for x in range(width):
     for y in range(height):
         if random.random() > 0.5:
@@ -71,18 +70,18 @@ rend.glLine(V2(0,0), V2(10, 250)) """
 #                 rend.glPoint(x, y+2, starColor)                
 #                 rend.glPoint(x+2, y+2, starColor)
 
-triangle= [V3(0,0,0), V3(50,0,0),V3(35,40,0)]
+triangle = [V3(0, 0, 0), V3(50, 0, 0), V3(35, 40, 0)]
 
 rend.glAddVertices(triangle)
-rend.glModelMatrix(translate = (width/2, height/2,0))
+rend.glModelMatrix(translate=(width / 2, height / 2, 0))
 
 rend.vertexShader = shaders.vertexShader
 rend.fragmentShader = shaders.fragmentShader
 
-rend.glLine(V3(0,height/2,0),V3(width,height/2,0))
-rend.glLine(V3(width/2,0,0),V3(width/2,height,0))
+rend.glLine(V3(0, height / 2, 0), V3(width, height / 2, 0))
+rend.glLine(V3(width / 2, 0, 0), V3(width / 2, height, 0))
 
-rend.glLoadModel("GLS.obj", translate = (width/30, height/30,0), scale = (1000, 1000,0))
+rend.glLoadModel("GLS.obj", translate=(width / 2, height / 2, 0), rotate=(0, 0, 0), scale=(500, 500, 0))
 
 rend.glRender()
 
