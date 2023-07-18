@@ -81,7 +81,7 @@ rend.fragmentShader = shaders.fragmentShader
 rend.glLine(V3(0, height / 2, 0), V3(width, height / 2, 0))
 rend.glLine(V3(width / 2, 0, 0), V3(width / 2, height, 0))
 
-rend.glLoadModel("GLS.obj", translate=(width / 2, height / 2, 0), rotate=(0, 0, 0), scale=(500, 500, 0))
+rend.glLoadModel("model.obj", translate=(width / 2, height / 2, 0), rotate=(0, 0, 0), scale=(500, 500, 0))
 
 rend.glRender()
 

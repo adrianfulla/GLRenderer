@@ -239,7 +239,7 @@ class Renderer(object):
 
         rotation = rotateZ * rotateY * rotateX
 
-        self.modelMatrix = translation * rotation * scale
+        self.modelMatrix = scale * rotation * translation
         return self.modelMatrix
 
     def glFinish(self, filename):
