@@ -10,11 +10,12 @@ class Obj(object):
         for line in self.lines:
             try:
                 prefix, values = line.split(" ", 1)
+                values = values.lstrip(" ").rstrip(" ")
             except:
                 continue
 
             if prefix == "v":  # Vertices
-                self.vertices.append(list(map(float, values.lstrip(" ").split(" "))))
+                self.vertices.append(list(map(float, values.split(" "))))
             elif prefix == "vt":  # Texture Coordinates
                 self.texcoords.append(list(map(float, values.split(" "))))
             elif prefix == "vn":  # Normals

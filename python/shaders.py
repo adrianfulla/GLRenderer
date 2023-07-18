@@ -12,5 +12,5 @@ def vertexShader(vertex, **kwargs):
     return vt
 
 def fragmentShader(**kwargs):
-    color = [0,1,0]
+    color = [1,1,0]
     return color

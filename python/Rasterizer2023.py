@@ -2,9 +2,9 @@ from gl import Renderer, V2, V3, color
 import shaders
 import random
 
-width = 3840
+width = 1080
 
-height = 2160
+height = 720
 
 rend = Renderer(width, height)
 
@@ -81,7 +81,7 @@ rend.fragmentShader = shaders.fragmentShader
 rend.glLine(V3(0, height / 2, 0), V3(width, height / 2, 0))
 rend.glLine(V3(width / 2, 0, 0), V3(width / 2, height, 0))
 
-rend.glLoadModel("skull.obj", translate=(width / 2, height / 2, 0), rotate=(0, 0, 0), scale=(1000, 1000, 0))
+rend.glLoadModel("skull.obj", translate=(width / 2, height / 2, 0), rotate=(0, 0, 0), scale=(20, 20, 0))
 
 rend.glRender()
 
