@@ -1,6 +1,6 @@
 import struct
 from collections import namedtuple
-from math import sin, cos
+from math import sin, cos, radians
 import notnumpy as nnp
 from obj import Obj
 
@@ -225,21 +225,21 @@ class Renderer(object):
                             [0, 0, scale[2], 0],
                             [0, 0, 0, 1]])
         rotateX = nnp.Matrix([[1, 0, 0, 0],
-                              [0, cos(rotate[0]), -sin(rotate[0]), 0],
-                              [0, sin(rotate[0]), cos(rotate[0]), 0],
+                              [0, cos(radians(rotate[0])), -sin(radians(rotate[0])), 0],
+                              [0, sin(radians(rotate[0])), cos(radians(rotate[0])), 0],
                               [0, 0, 0, 1]])
-        rotateY = nnp.Matrix([[cos(rotate[1]), 0, sin(rotate[1]), 0],
+        rotateY = nnp.Matrix([[cos(radians(rotate[1])), 0, sin(radians(rotate[1])), 0],
                               [0, 1, 0, 0],
-                              [-sin(rotate[1]), 0, cos(rotate[1]), 0],
+                              [-sin(radians(rotate[1])), 0, cos(radians(rotate[1])), 0],
                               [0, 0, 0, 1]])
-        rotateZ = nnp.Matrix([[cos(rotate[2]), -sin(rotate[2]), 0, 0],
-                              [sin(rotate[2]), cos(rotate[2]), 0, 0],
+        rotateZ = nnp.Matrix([[cos(radians(rotate[2])), -sin(radians(rotate[2])), 0, 0],
+                              [sin(radians(rotate[2])), cos(radians(rotate[2])), 0, 0],
                               [0, 0, 1, 0],
                               [0, 0, 0, 1]])
 
-        rotation = rotateZ * rotateY * rotateX
+        rotation = rotateX * (rotateY * rotateZ)
 
-        self.modelMatrix = scale * rotation * translation
+        self.modelMatrix = translation * (rotation * scale)
         return self.modelMatrix
 
     def glFinish(self, filename):

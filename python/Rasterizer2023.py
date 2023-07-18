@@ -70,10 +70,10 @@ rend.glLine(V2(0,0), V2(10, 250)) """
 #                 rend.glPoint(x, y+2, starColor)                
 #                 rend.glPoint(x+2, y+2, starColor)
 
-triangle = [V3(0, 0, 0), V3(50, 0, 0), V3(35, 40, 0)]
-
-rend.glAddVertices(triangle)
-rend.glModelMatrix(translate=(width / 2, height / 2, 0))
+# triangle = [V3(0, 0, 0), V3(50, 0, 0), V3(35, 40, 0)]
+#
+# rend.glAddVertices(triangle)
+# rend.glModelMatrix(translate=(width / 2, height / 2, 0))
 
 rend.vertexShader = shaders.vertexShader
 rend.fragmentShader = shaders.fragmentShader
@@ -81,8 +81,11 @@ rend.fragmentShader = shaders.fragmentShader
 rend.glLine(V3(0, height / 2, 0), V3(width, height / 2, 0))
 rend.glLine(V3(width / 2, 0, 0), V3(width / 2, height, 0))
 
-rend.glLoadModel("model.obj", translate=(width / 2, height / 2, 0), rotate=(0, 0, 0), scale=(500, 500, 0))
+rend.glLoadModel("skull.obj", translate=(width / 2, height / 2, 0), rotate=(0, 0, 0), scale=(1000, 1000, 0))
 
 rend.glRender()
 
 rend.glFinish("output.bmp")
+
+rend.glClear()
+
