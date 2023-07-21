@@ -1,53 +1,36 @@
-import struct
+"""
+ Universidad del Valle de Guatemala
+  Facultad de Ingenieria
+  Departamento de Ciencia de la Computacion.
+  Graficas por Computadora.
+  Sección: 20
+
+  Tarea 1 - Lines & Obj Models
+
+  @version 1.0
+  @author Adrian Fulladolsa Palma | Carne 21592
+"""
 from collections import namedtuple
 from math import sin, cos, radians
-import notnumpy as nnp
-from obj import Obj
+import Lib.notnumpy as nnp
+from Lib.Model import Model
+from Lib.Types import char, word, dword
 
 V3 = namedtuple('V3', ['x', 'y', 'z'])
 TRIANGLES = 3
-def char(c):
-    # 1 byte
-    return struct.pack('=c', c.encode('ascii'))
-
-
-def word(w):
-    # 2 bytes
-    return struct.pack('=h', w)
-
-
-def dword(d):
-    # 4 bytes
-    return struct.pack('=l', d)
 
 
 def color(r, g, b):
     return bytes([int(b * 255), int(g * 255), int(r * 255)])
 
 
-class Model(object):
-    def __init__(self, filename, translate=(0, 0, 0), rotate=(0, 0, 0), scale=(1, 1, 1)):
-        self.model = Obj(filename)
-
-        self.vertices = self.model.vertices
-        self.texcoords = self.model.texcoords
-        self.normals = self.model.normals
-        self.faces = self.model.faces
-        self.translate = translate
-        self.rotate = rotate
-        self.scale = scale
-
-
 class Renderer(object):
     def __init__(self, width, height):
         self.width = width
         self.height = height
-
         self.glClearColor(0, 0, 0)
         self.glClear()
-
         self.glColor(1, 1, 1)
-
         self.primitiveType = TRIANGLES
         self.vertexBuffer = []
         self.vertexShader = None
@@ -131,27 +114,32 @@ class Renderer(object):
 
         transformedVerts = []
         for model in self.objects:
-            modelMatrix = self.glModelMatrix(model.translate, model.rotate, model.scale)
+            mm = self.glModelMatrix(model.translate, model.rotate, model.scale)
 
         for face in model.faces:
             vertCount = len(face)
-            verts = []
-            if vertCount >= 3:
-                for i in range(vertCount):
-                    verts.append(model.vertices[face[i][0] - 1])
 
-                if self.vertexShader:
-                    for i in range(vertCount):
-                        verts[i] = self.vertexShader(verts[i] , modelMatrix=modelMatrix)
-                    
-                if vertCount == 3:
-                    transformedVerts.append(verts[0])
-                    transformedVerts.append(verts[1])
-                    transformedVerts.append(verts[2])
-                elif vertCount == 4:
-                    transformedVerts.append(verts[0])
-                    transformedVerts.append(verts[2])
-                    transformedVerts.append(verts[3])
+            v0 = model.vertices[face[0][0] - 1]
+            v1 = model.vertices[face[1][0] - 1]
+            v2 = model.vertices[face[2][0] - 1]
+
+            if vertCount == 4:
+                v3 = model.vertices[face[3][0] - 1]
+
+            if self.vertexShader:
+                v0 = self.vertexShader(v0, modelMatrix=mm)
+                v1 = self.vertexShader(v1, modelMatrix=mm)
+                v2 = self.vertexShader(v2, modelMatrix=mm)
+                if vertCount == 4:
+                    v3 = self.vertexShader(v3, modelMatrix=mm)
+
+            transformedVerts.append(v0)
+            transformedVerts.append(v1)
+            transformedVerts.append(v2)
+            if vertCount == 4:
+                transformedVerts.append(v0)
+                transformedVerts.append(v2)
+                transformedVerts.append(v3)
 
         primitives = self.glPrimitiveAssembly(transformedVerts)
 
@@ -175,12 +163,11 @@ class Renderer(object):
         primitives = []
 
         if self.primitiveType == TRIANGLES:
-            for i in range(0, len(tVerts), 3):
-                triangle = []
-                triangle.append(tVerts[i])
-                triangle.append(tVerts[i + 1])
-                triangle.append(tVerts[i + 2])
-                primitives.append(triangle)
+            print(len(tVerts))
+            if len(tVerts) % 3 == 0:
+                for i in range(0, len(tVerts), 3):
+                    triangle = [tVerts[i], tVerts[i + 1], tVerts[i + 2]]
+                    primitives.append(triangle)
 
         return primitives
 
@@ -194,23 +181,68 @@ class Renderer(object):
                             [0, 0, scale[2], 0],
                             [0, 0, 0, 1]])
         rotateX = nnp.Matrix([[1, 0, 0, 0],
-                              [0, cos(radians(rotate[0])), -sin(radians(rotate[0])), 0],
-                              [0, sin(radians(rotate[0])), cos(radians(rotate[0])), 0],
+                              [0, cos(rotate[0]), -sin(rotate[0]), 0],
+                              [0, sin(rotate[0]), cos(rotate[0]), 0],
                               [0, 0, 0, 1]])
-        rotateY = nnp.Matrix([[cos(radians(rotate[1])), 0, sin(radians(rotate[1])), 0],
+        rotateY = nnp.Matrix([[cos(rotate[1]), 0, sin(rotate[1]), 0],
                               [0, 1, 0, 0],
-                              [-sin(radians(rotate[1])), 0, cos(radians(rotate[1])), 0],
+                              [-sin(rotate[1]), 0, cos(rotate[1]), 0],
                               [0, 0, 0, 1]])
-        rotateZ = nnp.Matrix([[cos(radians(rotate[2])), -sin(radians(rotate[2])), 0, 0],
-                              [sin(radians(rotate[2])), cos(radians(rotate[2])), 0, 0],
+        rotateZ = nnp.Matrix([[cos(rotate[2]), -sin(rotate[2]), 0, 0],
+                              [sin(rotate[2]), cos(rotate[2]), 0, 0],
                               [0, 0, 1, 0],
                               [0, 0, 0, 1]])
 
-        rotation = rotateX * (rotateY * rotateZ)
+        rotation = rotateX * rotateY * rotateZ
 
-        self.modelMatrix = translation * (rotation * scale)
+        self.modelMatrix = translation * rotation * scale
         return self.modelMatrix
+    
+    def glBuildPoly(self, vertices, clr = None):
+        for i in range(len(vertices)):
+            if i < (len(vertices) - 1):
+                self.glLine(vertices[i], vertices[i+1], clr)
+            else:
+                self.glLine(vertices[i], vertices[0], clr)
+            
+    def insidePolygon(self, x, y, polygon):
+        n = len(polygon)
+        odd_nodes = False
+        j = n - 1
 
+        for i in range(n):
+            xi, yi = polygon[i]
+            xj, yj = polygon[j]
+
+            if yi < y and yj >= y or yj < y and yi >= y:
+                if xi + (y - yi) / (yj - yi) * (xj - xi) < x:
+                    odd_nodes = not odd_nodes
+
+            j = i
+
+        return odd_nodes
+    
+    
+    def glPaintPoly(self, vertices, clr = None):
+        bountyBox = [[vertices[0][0],vertices[0][1]],[vertices[0][0],vertices[0][1]]]
+        for vert in vertices:
+            if vert[0] < bountyBox[0][0]:
+                bountyBox[0][0] = vert[0]
+            elif vert[0] > bountyBox[1][0]:
+                bountyBox[1][0] = vert[0]
+            if vert[1] < bountyBox[0][1]:
+                bountyBox[0][1] = vert[1]
+            elif vert[1] > bountyBox[1][1]:
+                bountyBox[1][1] = vert[1]
+        
+        for x in range(bountyBox[0][0], bountyBox[1][0]):
+            for y in range(bountyBox[0][1], bountyBox[1][1]):
+                if self.insidePolygon(x, y, vertices):
+                    self.glPoint(x, y, clr)
+                
+                
+    
+    
     def glFinish(self, filename):
         with open(filename, "wb") as file:
             # Header

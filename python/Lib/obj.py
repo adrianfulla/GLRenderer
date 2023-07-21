@@ -1,3 +1,15 @@
+"""
+ Universidad del Valle de Guatemala
+  Facultad de Ingenieria
+  Departamento de Ciencia de la Computacion.
+  Graficas por Computadora.
+  Sección: 20
+
+  Tarea 1 - Lines & Obj Models
+
+  @version 1.0
+  @author Adrian Fulladolsa Palma | Carne 21592
+"""
 class Obj(object):
     def __init__(self, filename):
         with open(filename, "r") as file:
