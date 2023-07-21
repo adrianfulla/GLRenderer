@@ -15,6 +15,7 @@ from math import sin, cos, radians
 import Lib.notnumpy as nnp
 from Lib.Model import Model
 from Lib.Types import char, word, dword
+import Lib.npPirata as np
 
 V3 = namedtuple('V3', ['x', 'y', 'z'])
 TRIANGLES = 3
@@ -111,48 +112,47 @@ class Renderer(object):
         self.objects.append(Model(filename, translate, rotate, scale))
 
     def glRender(self):
+        tVerts = []
 
-        transformedVerts = []
         for model in self.objects:
-            mm = self.glModelMatrix(model.translate, model.rotate, model.scale)
+            mMatrix = self.glModelMatrix(model.translate, model.rotate, model.scale)
 
-        for face in model.faces:
-            vertCount = len(face)
+            for face in model.faces:
+                vertCount = len(face)
+                
+                v0 = model.vertices[face[0][0] - 1]
+                v1 = model.vertices[face[1][0] - 1]
+                v2 = model.vertices[face[2][0] - 1]
 
-            v0 = model.vertices[face[0][0] - 1]
-            v1 = model.vertices[face[1][0] - 1]
-            v2 = model.vertices[face[2][0] - 1]
-
-            if vertCount == 4:
-                v3 = model.vertices[face[3][0] - 1]
-
-            if self.vertexShader:
-                v0 = self.vertexShader(v0, modelMatrix=mm)
-                v1 = self.vertexShader(v1, modelMatrix=mm)
-                v2 = self.vertexShader(v2, modelMatrix=mm)
                 if vertCount == 4:
-                    v3 = self.vertexShader(v3, modelMatrix=mm)
+                    v3 = model.vertices[face[3][0] - 1]
+                
+                if self.vertexShader:
+                    v0 = self.vertexShader(v0, modelMatrix = mMatrix)
+                    v1 = self.vertexShader(v1, modelMatrix = mMatrix)
+                    v2 = self.vertexShader(v2, modelMatrix = mMatrix)
+                    if vertCount == 4:
+                        v3 = self.vertexShader(v3, modelMatrix = mMatrix)
+                
+                tVerts.append(v0)
+                tVerts.append(v1)
+                tVerts.append(v2)
+                if vertCount == 4:
+                    tVerts.append(v0)
+                    tVerts.append(v2)
+                    tVerts.append(v3)
+        
+        primitives = self.glPrimitiveAssembly(tVerts)
 
-            transformedVerts.append(v0)
-            transformedVerts.append(v1)
-            transformedVerts.append(v2)
-            if vertCount == 4:
-                transformedVerts.append(v0)
-                transformedVerts.append(v2)
-                transformedVerts.append(v3)
-
-        primitives = self.glPrimitiveAssembly(transformedVerts)
-
-        if self.fragmentShader:
-            primsColor = self.fragmentShader()
-
-            primColor = color(primsColor[0], primsColor[1], primsColor[2])
+        if (self.fragmentShader):
+            primColor = self.fragmentShader()
+            primColor = color(primColor[0], primColor[1], primColor[2])
         else:
             primColor = self.currColor
 
-        for primitive in primitives:
-            if self.primitiveType == TRIANGLES:
-                self.glTriangle(primitive[0], primitive[1], primitive[2], primColor)
+        for prim in primitives:
+            if (self.primitiveType == TRIANGLES):
+                self.glTriangle(prim[0], prim[1], prim[2], primColor)
 
     def glAddVertices(self, vertices):
         for vert in vertices:
@@ -163,7 +163,6 @@ class Renderer(object):
         primitives = []
 
         if self.primitiveType == TRIANGLES:
-            print(len(tVerts))
             if len(tVerts) % 3 == 0:
                 for i in range(0, len(tVerts), 3):
                     triangle = [tVerts[i], tVerts[i + 1], tVerts[i + 2]]
@@ -171,32 +170,38 @@ class Renderer(object):
 
         return primitives
 
-    def glModelMatrix(self, translate=(0, 0, 0), rotate=(0, 0, 0), scale=(1, 1, 1)):
+    def rotationMatCalc(self, t, w, a):
+        rx = nnp.Matrix([[1, 0, 0, 0],
+                [0, cos(t), -sin(t), 0],
+                [0, sin(t), cos(t), 0],
+                [0, 0, 0, 1]])
+        ry = nnp.Matrix([[cos(w), 0, sin(w), 0],
+                [0, 1, 0, 0],
+                [-sin(w), 0, cos(w), 0],
+                [0, 0, 0, 1]])
+        rz = nnp.Matrix([[cos(a), -sin(a), 0, 0],
+                [sin(a), cos(a), 0, 0],
+                [0, 0, 1, 0],
+                [0, 0, 0, 1]])
+        temp = rx * ry
+        return temp * rz
+
+    def glModelMatrix(self, translate = (0, 0, 0), rotation = (0, 0, 0), scale = (1, 1, 1)):
         translation = nnp.Matrix([[1, 0, 0, translate[0]],
-                                  [0, 1, 0, translate[1]],
-                                  [0, 0, 1, translate[2]],
-                                  [0, 0, 0, 1]])
-        scale = nnp.Matrix([[scale[0], 0, 0, 0],
-                            [0, scale[1], 0, 0],
-                            [0, 0, scale[2], 0],
-                            [0, 0, 0, 1]])
-        rotateX = nnp.Matrix([[1, 0, 0, 0],
-                              [0, cos(rotate[0]), -sin(rotate[0]), 0],
-                              [0, sin(rotate[0]), cos(rotate[0]), 0],
-                              [0, 0, 0, 1]])
-        rotateY = nnp.Matrix([[cos(rotate[1]), 0, sin(rotate[1]), 0],
-                              [0, 1, 0, 0],
-                              [-sin(rotate[1]), 0, cos(rotate[1]), 0],
-                              [0, 0, 0, 1]])
-        rotateZ = nnp.Matrix([[cos(rotate[2]), -sin(rotate[2]), 0, 0],
-                              [sin(rotate[2]), cos(rotate[2]), 0, 0],
-                              [0, 0, 1, 0],
-                              [0, 0, 0, 1]])
+                        [0, 1, 0, translate[1]],
+                        [0, 0, 1, translate[2]],
+                        [0, 0, 0, 1]])
 
-        rotation = rotateX * rotateY * rotateZ
+        scaleMat = nnp.Matrix([[scale[0], 0, 0, 0],
+                    [0, scale[1], 0, 0],
+                    [0, 0, scale[2], 0],
+                    [0, 0, 0, 1]])
 
-        self.modelMatrix = translation * rotation * scale
-        return self.modelMatrix
+        rotationMat = self.rotationMatCalc(rotation[0], rotation[1], rotation[2])
+
+        temp = translation * rotationMat
+
+        return temp * scaleMat 
     
     def glBuildPoly(self, vertices, clr = None):
         for i in range(len(vertices)):
