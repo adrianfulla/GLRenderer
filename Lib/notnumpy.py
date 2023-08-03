@@ -10,6 +10,7 @@
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
 """
+from math import isclose
 class Matrix:
     def __init__(self, arr):
         self.mat = arr
@@ -50,3 +51,29 @@ class Matrix:
     def transpose(self):
         result = [[self.mat[j][i] for j in range(len(self.mat))] for i in range(len(self.mat[0]))]
         return Matrix(result)
+    
+def bcCoords(A, B, C, P):
+    BCP = abs((P[0] * C[1] + C[0] * B[1] + B[0] * P[1]) - (P[1] * C[0] + C[1] * B[0] + B[1] * P[0]))
+    CAP = abs((A[0] * C[1] + C[0] * P[1] + P[0] * A[1]) - (A[1] * C[0] + C[1] * P[0] + P[1] * A[0]))
+    ABP = abs((A[0] * B[1] + B[0] * P[1] + P[0] * A[1]) - (A[1] * B[0] + B[1] * P[0] + P[1] * A[0]))
+    
+    ABC = abs((A[0] * B[1] + B[0] * C[1] + C[0] * A[1]) - (A[1] * B[0] + B[1] * C[0] + C[1] * A[0]))
+
+    """ BCP = (B[1] - C[1]) * (P[0] - C[0]) + (C[0] - B[0]) * (P[1] - C[1])
+    CAP = (C[1] - A[1]) * (P[0] - C[0]) + (A[0] - C[0]) * (P[1] - C[1])
+    #ABP = (A[1] - B[1]) * (P[0] - C[0]) + (B[0] - A[0]) * (P[1] - C[1])
+    
+    ABC = (B[1] - C[1]) * (A[0] - C[0]) + (C[0] - B[0]) * (A[1] - C[1]) """
+
+    if ABC == 0:
+        return None
+
+    u = BCP / ABC
+    v = CAP / ABC
+    w = ABP / ABC
+    #w = 1 - u - v
+
+    if (0 <= u <= 1) and (0 <= v <= 1) and (0 <= w <= 1) and isclose(u + v + w, 1.0):
+        return u, v, w
+    else:
+        return None

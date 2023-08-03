@@ -10,7 +10,6 @@
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
 """
-from Lib.npPirata import multMV
 def vertexShader(vertex, **kwargs):
      modelMatrix = kwargs["modelMatrix"]
      vt = [vertex[0], 
@@ -24,5 +23,12 @@ def vertexShader(vertex, **kwargs):
      return vt
 
 def fragmentShader(**kwargs):
-    color = [1,1,1]
+    texCoords = kwargs["texCoords"]
+    texture = kwargs["texture"]
+    
+    if (texture != None):
+        color = texture.getColor(texCoords[0], texCoords[1])
+    else:
+        color = (1, 1, 1)
+
     return color

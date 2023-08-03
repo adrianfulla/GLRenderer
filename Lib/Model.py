@@ -11,6 +11,7 @@
   @author Adrian Fulladolsa Palma | Carne 21592
 """
 from Lib.obj import Obj
+from Lib.texture import Texture
 class Model(object):
     def __init__(self, filename, translate=(0, 0, 0), rotate=(0, 0, 0), scale=(1, 1, 1)):
         self.model = Obj(filename)
@@ -22,3 +23,6 @@ class Model(object):
         self.translate = translate
         self.rotate = rotate
         self.scale = scale
+
+    def loadTexture(self, texName):
+      self.texture = Texture(texName)
