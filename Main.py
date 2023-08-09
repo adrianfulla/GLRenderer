@@ -23,31 +23,30 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
         print()
 
 print("Creando output.bmp")
-printProgressBar(0, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
+#printProgressBar(0, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
 
-width = 3840
-height = 2160
+width = 960
+height = 540
 
-printProgressBar(1, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
+#printProgressBar(1, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
 rend = Renderer(width, height)
-printProgressBar(2, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
+#printProgressBar(2, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
 rend.vertexShader = shaders.vertexShader
 rend.fragmentShader = shaders.fragmentShader
 
-rend.glLine((width/2,0), (width/2,height),color(1,1,1))
-rend.glLine((0,height/2), (width,height/2),color(1,1,1))
+rend.glLookAt(camPos = (0,0,0), eyePos= (0,0,-5))
 
-printProgressBar(3, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
+#printProgressBar(3, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
 
-rend.glLoadModel("Models/charging-bull.obj", "Models/charging-bull.bmp", translate=(width/4, height/13, 0), rotate=(1.4, 3.1, 2), scale=(3, 3, 3))
-rend.glLoadModel("Models/charging-bull.obj", "Models/charging-bull.bmp", translate=(3 * width/4, height/2.65, 0), rotate=(1.0, 0.2, 5), scale=(3, 3, 3))
-rend.glLoadModel("Models/charging-bull.obj", "Models/charging-bull.bmp", translate=(width/4, height/1.8, 0), rotate=(1.4, 3.1, 0), scale=(3, 3, 3))
-rend.glLoadModel("Models/charging-bull.obj", "Models/charging-bull.bmp", translate=(3 * width/4, height/1.8, 0), rotate=(1.4, 3.1, -1.0), scale=(3, 3, 3))
+rend.glLoadModel("Models/cup.obj", "Models/wall.bmp",translate = (0, 0, -5),
+                 rotate = (0, 0, 0),
+                 scale = (0.5,0.5,0.5))
 
-printProgressBar(4, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
+
+#printProgressBar(4, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
 rend.glRender()
 
-printProgressBar(5, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
+#printProgressBar(5, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
 rend.glFinish("output.bmp")
 
-printProgressBar(6, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
+#printProgressBar(6, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)

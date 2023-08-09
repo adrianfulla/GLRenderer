@@ -10,7 +10,8 @@
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
 """
-from math import isclose
+from math import isclose ,sqrt
+import numpy
 class Matrix:
     def __init__(self, arr):
         self.mat = arr
@@ -52,6 +53,7 @@ class Matrix:
         result = [[self.mat[j][i] for j in range(len(self.mat))] for i in range(len(self.mat[0]))]
         return Matrix(result)
     
+    
 def bcCoords(A, B, C, P):
     BCP = abs((P[0] * C[1] + C[0] * B[1] + B[0] * P[1]) - (P[1] * C[0] + C[1] * B[0] + B[1] * P[0]))
     CAP = abs((A[0] * C[1] + C[0] * P[1] + P[0] * A[1]) - (A[1] * C[0] + C[1] * P[0] + P[1] * A[0]))
@@ -77,3 +79,72 @@ def bcCoords(A, B, C, P):
         return u, v, w
     else:
         return None
+    
+def sub(v1, v2):
+        if len(v1) != len(v2):
+            raise ValueError("Tuples must have the same length.")
+        
+        subtracted_tuple = tuple(a - b for a, b in zip(v1, v2))
+        return subtracted_tuple
+        
+        return result
+
+def norm(x, ord=None, axis=None, keepdims=False):
+        if axis is not None:
+            raise ValueError("Axis argument is not supported.")
+        
+        if ord is None or ord == 2:
+            squared_sum = sum(v ** 2 for v in x)
+            norm = sqrt(squared_sum)
+            return norm
+        else:
+            raise ValueError("Only Euclidean norm (ord=2) is supported.")
+        
+def divTF(t, d):
+    if d != 0:
+        divided_tuple = tuple(value / d for value in t)
+        return divided_tuple
+    else:
+        return t
+    
+def cross(v1, v2):
+    if len(v1) != 3 or len(v2) != 3:
+        raise ValueError("Tuples must be 3-dimensional.")
+    
+    cross_product = [
+        v1[1] * v2[2] - v1[2] * v2[1],
+        v1[2] * v2[0] - v1[0] * v2[2],
+        v1[0] * v2[1] - v1[1] * v2[0]
+    ]
+    return cross_product
+
+def inv(matrix):
+        if len(matrix) != len(matrix[0]):
+            raise ValueError("Matrix must be square for inversion.")
+        
+        n = len(matrix)
+        augmented_matrix = [row + [1 if i == j else 0 for j in range(n)] for i, row in enumerate(matrix)]
+        
+        # Perform Gauss-Jordan elimination
+        for i in range(n):
+            pivot_row = augmented_matrix[i]
+            pivot_element = pivot_row[i]
+            
+            if pivot_element == 0:
+                raise ValueError("Matrix is singular, cannot be inverted.")
+            
+            pivot_row_normalized = [elem / pivot_element for elem in pivot_row]
+            augmented_matrix[i] = pivot_row_normalized
+            
+            for k in range(n):  # Use k instead of j
+                if k != i:
+                    factor = augmented_matrix[k][i]
+                    row_to_subtract = [elem * factor for elem in pivot_row_normalized]
+                    augmented_matrix[k] = [x - y for x, y in zip(augmented_matrix[k], row_to_subtract)]
+        
+        inverse_matrix = [row[n:] for row in augmented_matrix]
+        return inverse_matrix
+
+
+
+

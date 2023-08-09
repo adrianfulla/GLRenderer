@@ -29,8 +29,12 @@ class Obj(object):
             if prefix == "v":  # Vertices
                 self.vertices.append(list(map(float, values.split(" "))))
             elif prefix == "vt":  # Texture Coordinates
+                val = values.split(" ")
+                if len(val) == 2:
+                    val.append('0.000')
                 self.texcoords.append(list(map(float, values.split(" "))))
             elif prefix == "vn":  # Normals
                 self.normals.append(list(map(float, values.split(" "))))
             elif prefix == "f":  # Faces
                 self.faces.append([list(map(int, vert.split("/"))) for vert in values.split(" ")])
+
