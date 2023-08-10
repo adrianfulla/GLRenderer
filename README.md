@@ -6,15 +6,15 @@ Para obtener la nota completa de ésta tarea deben entregar lo siguiente:
 - Código fuente capaz de cargar un archivo .obj al software renderer
 - Código fuente capaz de cargar un archivo .obj al software renderer
 - Su código debe implementar las siguientes transformaciones utilizando matrices:
-Model
-View
-Projection
-Viewport
+  - Model
+  - View
+  - Projection
+  - Viewport
 - Photoshoot! Deben renderizar 4 tomas de su modelo:
-Medium shot 
-Low angle 
-High angle 
-Dutch angle
+  - Medium shot 
+  -Low angle 
+  - High angle 
+  - Dutch angle
 
 ## Inicialización
 
