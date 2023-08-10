@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Tarea 1 - Lines & Obj Models
+  Tarea 3 - Camaras
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
@@ -32,10 +32,10 @@ def vertexShader(vertex, **kwargs):
 def fragmentShader(**kwargs):
     texCoords = kwargs["texCoords"]
     texture = kwargs["texture"]
-    
-    if (texture != None):
+
+    if texture != None:
         color = texture.getColor(texCoords[0], texCoords[1])
     else:
-        color = (1, 1, 1)
+        color = (1,1,1)
 
     return color

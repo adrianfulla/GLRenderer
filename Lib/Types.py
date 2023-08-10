@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Tarea 1 - Lines & Obj Models
+  Tarea 3 - Camaras
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592

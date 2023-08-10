@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Tarea 1 - Lines & Obj Models
+  Tarea 3 - Camaras
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
@@ -51,7 +51,7 @@ class Renderer(object):
     def glClear(self):
         self.pixels = [[self.clearColor for y in range(self.height)] for x in range(self.width)]
 
-        self.zBuffer = [[float('inf') for y in range(self.height)]
+        self.zbuffer = [[float('inf') for y in range(self.height)]
                         for x in range(self.width)]
 
 
@@ -108,14 +108,16 @@ class Renderer(object):
         self.glLine(v1, v2, clr or self.currColor)
         self.glLine(v2, v0, clr or self.currColor)
 
-    def glTriangleBC(self, A, B, C, vta, vtb, vtc):
+    def glTriangleBC(self, A, B, C, vtA, vtB, vtC):
         minX = round(min(A[0], B[0], C[0]))
-        minY = round(min(A[1], B[1], C[1]))
         maxX = round(max(A[0], B[0], C[0]))
+        minY = round(min(A[1], B[1], C[1]))
         maxY = round(max(A[1], B[1], C[1]))
 
+        # Para cada pixel dentro del bounding box
         for x in range(minX, maxX + 1):
             for y in range(minY, maxY + 1):
+                # Si el pixel est� dentro del FrameBuffer
                 if (0 <= x < self.width) and (0 <= y < self.height):
 
                     P = (x,y)
@@ -130,14 +132,14 @@ class Renderer(object):
                         z = u * A[2] + v * B[2] + w * C[2]
 
                         # Si el valor de Z para este punto es menor que el valor guardado en el Z Buffer
-                        if z < self.zBuffer[x][y]:
+                        if z < self.zbuffer[x][y]:
                             
                             # Guardamos este valor de Z en el Z Buffer
-                            self.zBuffer[x][y] = z
+                            self.zbuffer[x][y] = z
 
                             # Calcular las UVs del pixel usando las coordenadas baric�ntricas.
-                            uvs = (u * vta[0] + v * vtb[0] + w * vtc[0],
-                                   u * vta[1] + v * vtb[1] + w * vtc[1])
+                            uvs = (u * vtA[0] + v * vtB[0] + w * vtC[0],
+                                   u * vtA[1] + v * vtB[1] + w * vtC[1])
 
                             # Si contamos un Fragment Shader, obtener el color de ah�.
                             # Sino, usar el color preestablecido.
@@ -209,6 +211,9 @@ class Renderer(object):
         model.loadTexture(texName)
 
         self.objects.append(model)
+
+    def glClearModel(self):
+        self.objects = []
 
     def glViewPort(self,x,y,width,height):
         self.vpX = x
@@ -354,7 +359,6 @@ class Renderer(object):
                     tCoords.append(vt3)
             
         primitives = self.glPrimitiveAssembly(tVerts, tCoords)
-
 
         for prim in primitives:
             if (self.primitiveType == TRIANGLES):
