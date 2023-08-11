@@ -12,7 +12,6 @@
 """
 
 import Lib.notnumpy as nnp
-import numpy 
 
 def vertexShader(vertex, **kwargs):
      modelMatrix = kwargs["modelMatrix"]
@@ -141,28 +140,27 @@ def phongShader(**kwargs):
               u * nA[2] + v * nB[2] + w * nC[2]]
     
     # Ensure the normal is unit-length
-    normal_len = numpy.linalg.norm(normal)
+    normal_len = nnp.norm(normal)
     if normal_len > 0:
         normal = [x / normal_len for x in normal]
 
     # Compute the reflection vector
-    reflect = numpy.subtract(numpy.multiply(2 * numpy.dot(normal, dLight), normal), dLight)
-    reflect_len = numpy.linalg.norm(reflect)
+    reflect = nnp.subtract(nnp.multiply(2 * nnp.dot_product(normal, dLight), normal), dLight)
+    reflect_len = nnp.norm(reflect)
     if reflect_len > 0:
         reflect = [x / reflect_len for x in reflect]
 
     # Compute the view direction vector
-    view = numpy.subtract(viewer, 
-                          numpy.array(kwargs["point"]))
-    view_len = numpy.linalg.norm(view)
+    view = nnp.subtract(viewer, kwargs["point"])
+    view_len = nnp.norm(view)
     if view_len > 0:
         view = [x / view_len for x in view]
 
     # Compute the specular factor
-    spec = max(numpy.dot(reflect, view), 0) ** 100  # Adjust the power for the shininess
+    spec = max(nnp.dot_product(reflect, view), 0) ** 100  # Adjust the power for the shininess
     
     # Compute the diffuse factor
-    diff = max(numpy.dot(normal, dLight), 0)
+    diff = max(nnp.dot_product(normal, dLight), 0)
 
     # Combine ambient, diffuse, and specular components
     r *= (0.1 + diff * 0.7 + spec * 0.2)

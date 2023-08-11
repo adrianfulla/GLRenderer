@@ -149,4 +149,13 @@ def dot_product(array1, array2):
 
         dot_product = sum(a * b for a, b in zip(array1, array2))
         return dot_product
+    
+def multiply(i, arr):
+    return [i * x for x in arr]
+
+def subtract(arr1, arr2):
+    if len(arr1) != len(arr2):
+            raise ValueError("Arrays must have the same length for subtraction.")
+        
+    return [a - b for a, b in zip(arr1, arr2)]
 

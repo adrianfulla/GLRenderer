@@ -23,7 +23,7 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
         print()
 
 print("Creando output.bmp")
-#printProgressBar(0, 6, prefix = 'Progreso: ', suffix = 'Completado: Iniciando', length = 50)
+printProgressBar(0, 6, prefix = 'Progreso: ', suffix = 'Completado: Iniciando', length = 50)
 
 width = 500
 height = 500
@@ -34,7 +34,7 @@ rend = Renderer(width, height)
 rend.vertexShader = shaders.vertexShader
 rend.fragmentShader = shaders.phongShader
 
-#printProgressBar(1, 6, prefix = 'Progreso: ', suffix = 'Completado: Cargando Modelo ', length = 50)
+printProgressBar(1, 6, prefix = 'Progreso: ', suffix = 'Completado: Cargando Modelo ', length = 50)
 
 rend.glLoadModel("Models/cup.obj", "Models/cup.bmp",translate = (0, 1, -2),
                  rotate = (-1, 5, 0),
@@ -42,7 +42,7 @@ rend.glLoadModel("Models/cup.obj", "Models/cup.bmp",translate = (0, 1, -2),
 
 #Medium shot
 rend.glLookAt(camPos = (0,2,0), eyePos= (0,0,-5))
-printProgressBar(2, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Medium Shot ', length = 50)
+printProgressBar(2, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Phong Shader ', length = 50)
 
 
 rend.glClear()
@@ -52,5 +52,5 @@ rend.glFinish("PhongShader.bmp")
 rend.glClear()
 
 
-#printProgressBar(6, 6, prefix = 'Progreso: ', suffix = 'Completado: Terminado              ', length = 50)
+printProgressBar(6, 6, prefix = 'Progreso: ', suffix = 'Completado: Terminado              ', length = 50)
     
