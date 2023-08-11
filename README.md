@@ -8,6 +8,7 @@ Puntos:
 - [Criterio subjetivo] 40 puntos por hacer la implementación de un shader de su elección o inventado por usted.
 - [Criterio subjetivo] 40 puntos por hacer la implementación de un shader de su elección o inventado por usted.
 - [Criterio subjetivo] 40 puntos por hacer la implementación de un shader de su elección o inventado por usted.
+
 Tomen en cuenta las siguientes condiciones:
 
 - La nota máxima es 100.
