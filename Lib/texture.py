@@ -1,3 +1,15 @@
+"""
+ Universidad del Valle de Guatemala
+  Facultad de Ingenieria
+  Departamento de Ciencia de la Computacion.
+  Graficas por Computadora.
+  Sección: 20
+
+  Tarea 3 - Camaras
+
+  @version 1.0
+  @author Adrian Fulladolsa Palma | Carne 21592
+"""
 from struct import unpack
 
 class Texture(object):

@@ -1,13 +1,20 @@
-# Tarea2-Textures
-El objetivo de este ejercicio es que puedan cargar un modelo 3D y dibujarlo por completo con su textura correspondiente.
+# Tarea 3 - Camaras
+El objetivo de este ejercicio es que puedan y visualizarlo desde diferentes ángulos con una cámara con perpectiva.
 
 Para obtener la nota completa de ésta tarea deben entregar lo siguiente:
 
-- Código fuente capaz de cargar un archivo .obj de su elección (no puede ser el usado en clase).
-- Código fuente capaz de cargar un archivo .bmp de su elección para texturizar el OBJ (no puede ser el usado en clase).
-- El OBJ debe ser dibujado con todos los triángulos rellenados y correctamente texturizados.
-- El OBJ debe ser dibujado cuatro veces en el BMP, rotado en cuatro diferentes direcciones.
-- El modelo debe ser cargado en el centro de la pantalla y debe ser completamente visible (no muy pequeño que no se distinga, y no muy grande que se salga de la pantalla).
+- Código fuente capaz de cargar un archivo .obj al software renderer
+- Código fuente capaz de cargar un archivo .obj al software renderer
+- Su código debe implementar las siguientes transformaciones utilizando matrices:
+  - Model
+  - View
+  - Projection
+  - Viewport
+- Photoshoot! Deben renderizar 4 tomas de su modelo:
+  - Medium shot 
+  -Low angle 
+  - High angle 
+  - Dutch angle
 
 ## Inicialización
 
@@ -16,4 +23,4 @@ Para obtener la nota completa de ésta tarea deben entregar lo siguiente:
     python3 Main.py
   ```
 ## Resultado
-Al ejecutar el progama se debe obtener un archivo llamado ```output.bmp``` la cual tendra un tamaño de 3840x2160px con la imagen del Toro de Wall Street en distantas poses, estas imagenes ademas de tener el modelo del toro tendran su textura.
+Al ejecutar el progama se deben obtener cuatro archivos, cada uno con las tomas renderizadas del modelo de un vaso de color cafe con borde blanco.
