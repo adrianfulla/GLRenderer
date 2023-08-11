@@ -39,10 +39,6 @@ rend.glLine((0,height/2), (width,height/2),color(1,1,1))
 
 printProgressBar(3, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
 
-rend.glLoadModel("Models/charging-bull.obj", "Models/charging-bull.bmp", translate=(width/4, height/13, 0), rotate=(1.4, 3.1, 2), scale=(3, 3, 3))
-rend.glLoadModel("Models/charging-bull.obj", "Models/charging-bull.bmp", translate=(3 * width/4, height/2.65, 0), rotate=(1.0, 0.2, 5), scale=(3, 3, 3))
-rend.glLoadModel("Models/charging-bull.obj", "Models/charging-bull.bmp", translate=(width/4, height/1.8, 0), rotate=(1.4, 3.1, 0), scale=(3, 3, 3))
-rend.glLoadModel("Models/charging-bull.obj", "Models/charging-bull.bmp", translate=(3 * width/4, height/1.8, 0), rotate=(1.4, 3.1, -1.0), scale=(3, 3, 3))
 
 printProgressBar(4, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
 rend.glRender()

@@ -10,11 +10,7 @@
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
 """
-<<<<<<< Updated upstream
-from math import isclose
-=======
 from math import isclose ,sqrt
->>>>>>> Stashed changes
 class Matrix:
     def __init__(self, arr):
         self.mat = arr
@@ -56,11 +52,6 @@ class Matrix:
         result = [[self.mat[j][i] for j in range(len(self.mat))] for i in range(len(self.mat[0]))]
         return Matrix(result)
     
-<<<<<<< Updated upstream
-=======
-    
-    
->>>>>>> Stashed changes
 def bcCoords(A, B, C, P):
     BCP = abs((P[0] * C[1] + C[0] * B[1] + B[0] * P[1]) - (P[1] * C[0] + C[1] * B[0] + B[1] * P[0]))
     CAP = abs((A[0] * C[1] + C[0] * P[1] + P[0] * A[1]) - (A[1] * C[0] + C[1] * P[0] + P[1] * A[0]))
@@ -85,9 +76,7 @@ def bcCoords(A, B, C, P):
     if (0 <= u <= 1) and (0 <= v <= 1) and (0 <= w <= 1) and isclose(u + v + w, 1.0):
         return u, v, w
     else:
-<<<<<<< Updated upstream
-        return None
-=======
+
         return None
     
 def sub(v1, v2):
@@ -161,4 +150,4 @@ def dot_product(array1, array2):
 
         dot_product = sum(a * b for a, b in zip(array1, array2))
         return dot_product
->>>>>>> Stashed changes
+

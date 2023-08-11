@@ -37,13 +37,11 @@ class Renderer(object):
         self.fragmentShader = None
         self.objects = []
         self.activeTexture = None
-<<<<<<< Updated upstream
-=======
         self.glViewPort(0,0,self.width,self.height)
         self.glCamMatrix()
         self.glProjectionMatrix()
         self.directionalLight = [0,-1,0]
->>>>>>> Stashed changes
+
 
     def glClearColor(self, r, g, b):
         self.clearColor = color(r, g, b)
@@ -111,50 +109,30 @@ class Renderer(object):
         self.glLine(v1, v2, clr or self.currColor)
         self.glLine(v2, v0, clr or self.currColor)
 
-<<<<<<< Updated upstream
-    def glTriangleBC(self, A, B, C, vta, vtb, vtc):
-=======
-    def glTriangleBC(self, verts, texCoords, normals):
-        # Rederizaci�n de un tri�ngulo usando coordenadas baric�ntricas.
-        # Se reciben los vertices A, B y C y las coordenadas de
-        # textura vtA, vtB y vtC
 
+    def glTriangleBC(self, verts, texCoords, normals):
         A= verts[0]
         B= verts[1]
         C= verts[2]
 
         # Bounding box
->>>>>>> Stashed changes
         minX = round(min(A[0], B[0], C[0]))
-        minY = round(min(A[1], B[1], C[1]))
         maxX = round(max(A[0], B[0], C[0]))
+        minY = round(min(A[1], B[1], C[1]))
         maxY = round(max(A[1], B[1], C[1]))
 
+        # Para cada pixel dentro del bounding box
         for x in range(minX, maxX + 1):
             for y in range(minY, maxY + 1):
-                P = [x, y]
-                
-                try:
-                    u, v, w = nnp.bcCoords(A, B, C, P)
+                # Si el pixel est� dentro del FrameBuffer
+                if (0 <= x < self.width) and (0 <= y < self.height):
 
-                    z = u * A[2] + v * B[2] + w * C[2]
+                    P = (x,y)
+                    bCoords = nnp.bcCoords(A, B, C, P)
 
-                    if(z < self.zBuffer[x][y]):
-                        self.zBuffer[x][y] = z
+                    # Si se obtienen coordenadas baric�ntricas v�lidas para este punto
+                    if bCoords != None:
 
-<<<<<<< Updated upstream
-                        uvs = [u * vta[0] + v * vtb[0] + w * vtc[0],
-                                u * vta[1] + v * vtb[1] + w * vtc[1],
-                                u * vta[2] + v * vtb[2] + w * vtc[2]]
-                        
-                        if (self.fragmentShader != None):
-                            colorP = self.fragmentShader(texCoords = uvs, texture = self.activeTexture)
-                            self.glPoint(x, y, color(colorP[0], colorP[1], colorP[2]))
-                        else:
-                            self.glPoint(x, y, self.currColor)
-                except:
-                    pass
-=======
                         u, v, w = bCoords
 
                         # Se calcula el valor Z para este punto usando las coordenadas baric�ntricas
@@ -180,7 +158,7 @@ class Renderer(object):
                                 
                             else:
                                 self.glPoint(x, y)
->>>>>>> Stashed changes
+
 
     def glLine(self, v0, v1, clr=None):
         # Bresenham line algorith
@@ -288,10 +266,6 @@ class Renderer(object):
                     tCoords.append(vt0)
                     tCoords.append(vt2)
                     tCoords.append(vt3)
-<<<<<<< Updated upstream
-        
-        primitives = self.glPrimitiveAssembly(tVerts, tCoords)
-=======
 
                 v0 = model.normals[face[0][2] - 1]
                 v1 = model.normals[face[1][2] - 1]
@@ -310,7 +284,6 @@ class Renderer(object):
                 
             
         primitives = self.glPrimitiveAssembly(tVerts, tCoords, tnormals)
->>>>>>> Stashed changes
 
 
         for prim in primitives:
@@ -326,13 +299,7 @@ class Renderer(object):
         primitives = []
 
         if self.primitiveType == TRIANGLES:
-<<<<<<< Updated upstream
-            if len(tVerts) % 3 == 0:
-                for i in range(0, len(tVerts), 3):
-                    triangle = [tVerts[i], tVerts[i + 1], tVerts[i + 2],
-                                tTexCoords[i], tTexCoords[i + 1], tTexCoords[i + 2]]
-                    primitives.append(triangle)
-=======
+
             for i in range(0, len(tVerts), 3):
                 verts = []
                 # Verts
@@ -354,7 +321,6 @@ class Renderer(object):
 
                 triangle = [verts, texCoords, normals]
                 primitives.append(triangle)
->>>>>>> Stashed changes
 
         return primitives
 
