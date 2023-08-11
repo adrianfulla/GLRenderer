@@ -32,7 +32,7 @@ printProgressBar(1, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50
 rend = Renderer(width, height)
 printProgressBar(2, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
 rend.vertexShader = shaders.vertexShader
-rend.fragmentShader = shaders.fragmentShader
+rend.fragmentShader = shaders.gouradShader
 
 rend.glLine((width/2,0), (width/2,height),color(1,1,1))
 rend.glLine((0,height/2), (width,height/2),color(1,1,1))

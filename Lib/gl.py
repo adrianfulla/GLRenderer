@@ -37,6 +37,13 @@ class Renderer(object):
         self.fragmentShader = None
         self.objects = []
         self.activeTexture = None
+<<<<<<< Updated upstream
+=======
+        self.glViewPort(0,0,self.width,self.height)
+        self.glCamMatrix()
+        self.glProjectionMatrix()
+        self.directionalLight = [0,-1,0]
+>>>>>>> Stashed changes
 
     def glClearColor(self, r, g, b):
         self.clearColor = color(r, g, b)
@@ -104,7 +111,20 @@ class Renderer(object):
         self.glLine(v1, v2, clr or self.currColor)
         self.glLine(v2, v0, clr or self.currColor)
 
+<<<<<<< Updated upstream
     def glTriangleBC(self, A, B, C, vta, vtb, vtc):
+=======
+    def glTriangleBC(self, verts, texCoords, normals):
+        # Rederizaci�n de un tri�ngulo usando coordenadas baric�ntricas.
+        # Se reciben los vertices A, B y C y las coordenadas de
+        # textura vtA, vtB y vtC
+
+        A= verts[0]
+        B= verts[1]
+        C= verts[2]
+
+        # Bounding box
+>>>>>>> Stashed changes
         minX = round(min(A[0], B[0], C[0]))
         minY = round(min(A[1], B[1], C[1]))
         maxX = round(max(A[0], B[0], C[0]))
@@ -122,6 +142,7 @@ class Renderer(object):
                     if(z < self.zBuffer[x][y]):
                         self.zBuffer[x][y] = z
 
+<<<<<<< Updated upstream
                         uvs = [u * vta[0] + v * vtb[0] + w * vtc[0],
                                 u * vta[1] + v * vtb[1] + w * vtc[1],
                                 u * vta[2] + v * vtb[2] + w * vtc[2]]
@@ -133,6 +154,33 @@ class Renderer(object):
                             self.glPoint(x, y, self.currColor)
                 except:
                     pass
+=======
+                        u, v, w = bCoords
+
+                        # Se calcula el valor Z para este punto usando las coordenadas baric�ntricas
+                        z = u * A[2] + v * B[2] + w * C[2]
+
+                        # Si el valor de Z para este punto es menor que el valor guardado en el Z Buffer
+                        if z < self.zbuffer[x][y]:
+                            
+                            # Guardamos este valor de Z en el Z Buffer
+                            self.zbuffer[x][y] = z
+
+                            # Si contamos un Fragment Shader, obtener el color de ah�.
+                            # Sino, usar el color preestablecido.
+                            if self.fragmentShader != None:
+                                # Mandar los par�metros necesarios al shader
+                                colorP = self.fragmentShader(texture = self.activeTexture,
+                                                             texCoords= texCoords,
+                                                             normals= normals,
+                                                             dLight= self.directionalLight,
+                                                             bCoords= bCoords)
+
+                                self.glPoint(x, y, color(colorP[0], colorP[1], colorP[2]))
+                                
+                            else:
+                                self.glPoint(x, y)
+>>>>>>> Stashed changes
 
     def glLine(self, v0, v1, clr=None):
         # Bresenham line algorith
@@ -196,6 +244,7 @@ class Renderer(object):
     def glRender(self):
         tVerts = []
         tCoords = []
+        tnormals = []
 
         for model in self.objects:
             self.activeTexture = model.texture
@@ -239,28 +288,73 @@ class Renderer(object):
                     tCoords.append(vt0)
                     tCoords.append(vt2)
                     tCoords.append(vt3)
+<<<<<<< Updated upstream
         
         primitives = self.glPrimitiveAssembly(tVerts, tCoords)
+=======
+
+                v0 = model.normals[face[0][2] - 1]
+                v1 = model.normals[face[1][2] - 1]
+                v2 = model.normals[face[2][2] - 1]
+                if vertCount == 4:
+                    v3 = model.normals[face[3][2] - 1]
+
+                tnormals.append(v0)
+                tnormals.append(v1)
+                tnormals.append(v2)
+                if vertCount == 4:
+                    tnormals.append(v0)
+                    tnormals.append(v2)
+                    tnormals.append(v3)
+
+                
+            
+        primitives = self.glPrimitiveAssembly(tVerts, tCoords, tnormals)
+>>>>>>> Stashed changes
 
 
         for prim in primitives:
             if (self.primitiveType == TRIANGLES):
-                    self.glTriangleBC(prim[0], prim[1], prim[2], prim[3], prim[4], prim[5])
+                    self.glTriangleBC(prim[0], prim[1], prim[2])
 
     def glAddVertices(self, vertices):
         for vert in vertices:
             self.vertexBuffer.append(vert)
 
-    def glPrimitiveAssembly(self, tVerts, tTexCoords):
+    def glPrimitiveAssembly(self, tVerts, tTexCoords, tnormals):
 
         primitives = []
 
         if self.primitiveType == TRIANGLES:
+<<<<<<< Updated upstream
             if len(tVerts) % 3 == 0:
                 for i in range(0, len(tVerts), 3):
                     triangle = [tVerts[i], tVerts[i + 1], tVerts[i + 2],
                                 tTexCoords[i], tTexCoords[i + 1], tTexCoords[i + 2]]
                     primitives.append(triangle)
+=======
+            for i in range(0, len(tVerts), 3):
+                verts = []
+                # Verts
+                verts.append( tVerts[i] )
+                verts.append( tVerts[i + 1] )
+                verts.append( tVerts[i + 2] )
+
+                # TexCoords
+                texCoords = []
+                texCoords.append( tTexCoords[i] )
+                texCoords.append( tTexCoords[i + 1] )
+                texCoords.append( tTexCoords[i + 2] )
+
+                #Normals
+                normals = []
+                normals.append(tnormals[i])
+                normals.append(tnormals[i + 1])
+                normals.append(tnormals[i + 2])
+
+                triangle = [verts, texCoords, normals]
+                primitives.append(triangle)
+>>>>>>> Stashed changes
 
         return primitives
 
