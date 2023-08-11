@@ -11,7 +11,7 @@
   @author Adrian Fulladolsa Palma | Carne 21592
 """
 from collections import namedtuple
-from math import sin, cos, radians
+from math import sin, cos, tan, pi
 import Lib.notnumpy as nnp
 from Lib.Model import Model
 from Lib.Types import char, word, dword
@@ -40,7 +40,7 @@ class Renderer(object):
         self.glViewPort(0,0,self.width,self.height)
         self.glCamMatrix()
         self.glProjectionMatrix()
-        self.directionalLight = [0,-1,0]
+        self.directionalLight = [0,-1,-0.5]
 
 
     def glClearColor(self, r, g, b):
@@ -52,8 +52,11 @@ class Renderer(object):
     def glClear(self):
         self.pixels = [[self.clearColor for y in range(self.height)] for x in range(self.width)]
 
-        self.zBuffer = [[float('inf') for y in range(self.height)]
+        self.zbuffer = [[float('inf') for y in range(self.height)]
                         for x in range(self.width)]
+        
+    def glClearModel(self):
+        self.objects = []
 
 
     def glPoint(self, x, y, clr=None):
@@ -109,6 +112,57 @@ class Renderer(object):
         self.glLine(v1, v2, clr or self.currColor)
         self.glLine(v2, v0, clr or self.currColor)
 
+    def glViewPort(self,x,y,width,height):
+        self.vpX = x
+        self.vpY = y
+        self.vpWidth = width
+        self.vpHeight = height
+        
+        self.vpMatrix = nnp.Matrix([[self.vpWidth/2,0,0,self.vpX+self.vpWidth/2],
+                                   [0,self.vpHeight/2,0,self.vpY+self.vpHeight/2],
+                                   [0,0,0.5,0.5],
+                                   [0,0,0,1]])
+    
+    def glCamMatrix(self, translate = (0,0,0), rotate = (0,0,0)):
+        #Crea matrix de camara
+        self.camMatrix = self.glModelMatrix(translate, rotate)
+        
+        #Matriz de vista es igual a la inversa de la camara
+        self.viewMatrix = nnp.inv(self.camMatrix.mat)
+
+    def glLookAt(self, camPos = (0,0,0), eyePos = (0,0,0)):
+        worldUp = (0,1,0)
+        self.eyePos = eyePos
+        
+        forward = nnp.sub(worldUp, eyePos)
+
+        forward = nnp.divTF(forward, nnp.norm(forward))
+
+        right = nnp.cross(worldUp, forward)
+        right = nnp.divTF(right, nnp.norm(forward))
+
+        up = nnp.cross(forward, right)
+        up = nnp.divTF(up, nnp.norm(up))
+
+        self.camMatrix = nnp.Matrix([[right[0],up[0],forward[0],camPos[0]],
+                                    [right[1],up[1],forward[1],camPos[1]],
+                                    [right[2],up[2],forward[2],camPos[2]],
+                                    [0,0,0,1]])
+        
+        self.viewMatrix = nnp.Matrix(nnp.inv(self.camMatrix.mat))
+
+    def glProjectionMatrix(self, fov = 60, n = 0.1, f = 1000):
+        aspectRatio = self.vpWidth/self.vpHeight
+        
+        t = tan((fov*pi/180)/2)*n
+        
+        r = t*aspectRatio
+        
+        self.projectionMatrix = nnp.Matrix([[n/r,0,0,0],
+                                           [0,n/t,0,0],
+                                           [0,0,-(f+n)/(f-n),(-2*f*n)/(f-n)],
+                                           [0,0,-1,0]])
+
 
     def glTriangleBC(self, verts, texCoords, normals):
         A= verts[0]
@@ -152,7 +206,9 @@ class Renderer(object):
                                                              texCoords= texCoords,
                                                              normals= normals,
                                                              dLight= self.directionalLight,
-                                                             bCoords= bCoords)
+                                                             bCoords= bCoords,
+                                                             viewer = self.eyePos,
+                                                             point = bCoords)
 
                                 self.glPoint(x, y, color(colorP[0], colorP[1], colorP[2]))
                                 
@@ -239,11 +295,23 @@ class Renderer(object):
                     v3 = model.vertices[face[3][0] - 1]
                 
                 if self.vertexShader:
-                    v0 = self.vertexShader(v0, modelMatrix = mMatrix)
-                    v1 = self.vertexShader(v1, modelMatrix = mMatrix)
-                    v2 = self.vertexShader(v2, modelMatrix = mMatrix)
+                    v0 = self.vertexShader(v0, modelMatrix = mMatrix,
+                                           viewMatrix = self.viewMatrix,
+                                           projectionMatrix = self.projectionMatrix,
+                                           vpMatrix = self.vpMatrix)
+                    v1 = self.vertexShader(v1, modelMatrix = mMatrix,
+                                           viewMatrix = self.viewMatrix,
+                                           projectionMatrix = self.projectionMatrix,
+                                           vpMatrix = self.vpMatrix)
+                    v2 = self.vertexShader(v2, modelMatrix = mMatrix,
+                                           viewMatrix = self.viewMatrix,
+                                           projectionMatrix = self.projectionMatrix,
+                                           vpMatrix = self.vpMatrix)
                     if vertCount == 4:
-                        v3 = self.vertexShader(v3, modelMatrix = mMatrix)
+                        v3 = self.vertexShader(v3, modelMatrix = mMatrix,
+                                           viewMatrix = self.viewMatrix,
+                                           projectionMatrix = self.projectionMatrix,
+                                           vpMatrix = self.vpMatrix)
                 
                 tVerts.append(v0)
                 tVerts.append(v1)

@@ -85,8 +85,7 @@ def sub(v1, v2):
         
         subtracted_tuple = tuple(a - b for a, b in zip(v1, v2))
         return subtracted_tuple
-        
-        return result
+    
 
 def norm(x, ord=None, axis=None, keepdims=False):
         if axis is not None:
