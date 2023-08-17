@@ -26,4 +26,18 @@ Tomen en cuenta las siguientes condiciones:
     python3 Main.py
   ```
 ## Resultado
-Al ejecutar el progama se deben obtener un archivo llamado ```PhongShader.bmp```, este contiene la imagen de un vaso color cafe renderizado utilizando un Phong Shader, además se incluye en el repositorio el archivo ```GouroudShader.bmp``` que es la misma imagen del vaso rendereizado utilizando el algoritmo mostrado en clase, se incluyo con el proposito de comparar los dos tipos de shaders.
+Al ejecutar el progama se deben obtener los siguientes cuatro archivos:
+- ```GouradShader.bmp```
+- ```PhongShader.bmp```
+- ```GradientShader.bmp```
+- ```GlitchShader.bmp```
+
+Cada uno de estos corresponde a uno de los shaders implementados en este laboratorio, siendo el GouradShader el implementado en clase y se puede utilizar como punto de comparación con los demas.
+
+## Herramientas Externas
+
+En este laboratorio se utilizo el apoyo de la herramienta externa ChatGPT para crear una algoritmo que generará el ```Phong Shader``` en base al algoritmo creado para generar el ```Gourad Shader```. La conversación fue la siguiente: https://chat.openai.com/share/8bb3be52-93f1-46a2-9c9c-884f52f379e7
+
+Se dio como referencia el algoritmo de Gourad Shader y se pidio que se implementara un Phong Shader. Este shader fue desarrollado por Bui Tuong Phong en la Universidad de Utah en 1973 y consiste en mejorar el Gourad shader teniendo una mejor aproximación a la sombra de una superficie suave. Utilizá un modelo de reflexión para generar reflejos especulares. Además utilizá el punto de la cámara para ajustar la reflexión que se genera en base al punto de luz.
+
+Este algoritmo fue además utilizado para generar el ```glitchFragmentShader``` utilizado en el ```GlitchShader``` ya que este combina el uso de un vertex shader para crear las "anomalias" en los vertices con un fragment shader que genera descoloración en cada pixel.
