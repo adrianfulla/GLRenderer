@@ -28,11 +28,10 @@ printProgressBar(0, 6, prefix = 'Progreso: ', suffix = 'Completado: Iniciando', 
 width = 500
 height = 500
 
-
 rend = Renderer(width, height)
 
 rend.vertexShader = shaders.vertexShader
-rend.fragmentShader = shaders.phongShader
+rend.fragmentShader = shaders.gouradShader
 
 printProgressBar(1, 6, prefix = 'Progreso: ', suffix = 'Completado: Cargando Modelo ', length = 50)
 
@@ -40,17 +39,36 @@ rend.glLoadModel("Models/cup.obj", "Models/cup.bmp",translate = (0, 1, -2),
                  rotate = (-1, 5, 0),
                  scale = (1,1,1))
 
-#Medium shot
 rend.glLookAt(camPos = (0,2,0), eyePos= (0,0,-5))
-printProgressBar(2, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Phong Shader ', length = 50)
+printProgressBar(2, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Gourud Shader ', length = 50)
 
-
+rend.glRender()
+rend.glFinish("GourudShader.bmp")
 rend.glClear()
+
+printProgressBar(3, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Phong Shader ', length = 50)
+rend.vertexShader = shaders.vertexShader
+rend.fragmentShader = shaders.phongShader
 
 rend.glRender()
 rend.glFinish("PhongShader.bmp")
 rend.glClear()
 
+printProgressBar(4, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Gradient Shader ', length = 50)
+rend.vertexShader = shaders.vertexShader
+rend.fragmentShader = shaders.gradientShader
 
-printProgressBar(6, 6, prefix = 'Progreso: ', suffix = 'Completado: Terminado              ', length = 50)
+rend.glRender()
+rend.glFinish("GradientShader.bmp")
+rend.glClear()
+
+printProgressBar(5, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Glitch Shader ', length = 50)
+rend.vertexShader = shaders.glitchVertexShader
+rend.fragmentShader = shaders.glitchFragmentShader
+
+rend.glRender()
+rend.glFinish("GlitchShader.bmp")
+rend.glClear()
+
+printProgressBar(6, 6, prefix = 'Progreso: ', suffix = 'Completado: Terminado                    ', length = 50)
     
