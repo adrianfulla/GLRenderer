@@ -25,8 +25,8 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
 print("Creando output.bmp")
 printProgressBar(0, 6, prefix = 'Progreso: ', suffix = 'Completado: Iniciando', length = 50)
 
-width = 500
-height = 500
+width = 3820
+height = 2160
 
 rend = Renderer(width, height)
 
@@ -40,7 +40,7 @@ rend.glLoadModel("Models/cup.obj", "Models/cup.bmp",translate = (0, 1, -2),
                  scale = (1,1,1))
 
 rend.glLookAt(camPos = (0,2,0), eyePos= (0,0,-5))
-printProgressBar(2, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Gourud Shader ', length = 50)
+""" printProgressBar(2, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Gourud Shader ', length = 50)
 
 rend.glRender()
 rend.glFinish("GourudShader.bmp")
@@ -61,10 +61,10 @@ rend.fragmentShader = shaders.gradientShader
 rend.glRender()
 rend.glFinish("GradientShader.bmp")
 rend.glClear()
-
+"""
 printProgressBar(5, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Glitch Shader ', length = 50)
 rend.vertexShader = shaders.glitchVertexShader
-rend.fragmentShader = shaders.glitchFragmentShader
+rend.fragmentShader = shaders.glitchFragmentShader 
 
 rend.glRender()
 rend.glFinish("GlitchShader.bmp")
