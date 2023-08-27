@@ -29,3 +29,10 @@ Para que un modelo cuente dentro del puntaje, debe de ser proyectado en perspect
     python3 Main.py
   ```
 ## Resultado
+El resultado del programa es el archivo ```output.bmp```, al abrir este se obtendra una imagen de una plaza, especificamente la plaza del juego Cruelty Squad de Consumer Softproducts, en la plaza se encuentran 4 modelos, de derecha a izquierda se pueden observar: 
+- El modelo de un **puesto de comida** en el cuál todo es dorado y se encuentra con un **Phong Shader**
+- El modelo del **mercader** del puesto orgulloso de su tesoro, pero este se encuentra atacado por el **Glitch Vertex Shader** y el **Glitch Fragment Shader** los cuales lo distorcionan y alteran su imagen
+- En el techo se puede observar colgando la estatua de **David de Miguel Ángel**, esta tiene un **Gradient Shader** que combina una gradiente de colores con el sombreado Phong Shader.
+- Por último pero no menos importante, se puede ver a la izquierda del mercader el modelo de un **toro**, esta bien si no se ve al inicio, eso es porque tiene un **Diffuser Shader** para esconderse en la plaza.
+
+La inspiración para esta imagen fue el juego Cruelty Squad, específicamente la estética que busca ser bizarra y confusa al principio. 
