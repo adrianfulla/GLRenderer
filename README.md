@@ -24,10 +24,13 @@ Para que un modelo cuente dentro del puntaje, debe de ser proyectado en perspect
 
 ## Inicialización
 
- El Rasterizador puede ser ejecutado mediante la ejecución del archivo ```Main.py```, dentro de una ventana de shell, navegar al directorio donde se encuentran los archivos y correr el siguiente comando:
+ El Rasterizador puede ser ejecutado de dos maneras, la primera siendo mediante la ejecución del archivo ```Main.exe```, es posible que al intentar ejecutar este archivo se obtenga un mensaje de advertencia por parte de software de antivirus, prometo que no tiene nada malo, es debido al metodo de compilación que se encuentra marcado como potencial virus. 
+La segunda manera de ejecutar el Rasterizador es mediante la ejecución del archivo ```Main.py```, dentro de una ventana de shell, navegar al directorio donde se encuentran los archivos y correr el siguiente comando:
   ```bash
     python3 Main.py
-  ```
+  ```  
+Esta segunda manera es la indicada para computadoras que no corran Windows como sistema operativo o no se desee ejecutar el .exe. Se necesita tener python3 instalado.
+
 ## Resultado
 El resultado del programa es el archivo ```output.bmp```, al abrir este se obtendra una imagen de una plaza, especificamente la plaza del juego Cruelty Squad de Consumer Softproducts, en la plaza se encuentran 4 modelos, de derecha a izquierda se pueden observar: 
 - El modelo de un **puesto de comida** en el cuál todo es dorado y se encuentra con un **Phong Shader**
