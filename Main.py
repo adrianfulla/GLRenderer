@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Tarea 3 - Camaras
+  Proyecto 1: Rasterizer
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
@@ -23,52 +23,50 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
         print()
 
 print("Creando output.bmp")
-printProgressBar(0, 6, prefix = 'Progreso: ', suffix = 'Completado: Iniciando', length = 50)
+#printProgressBar(0, 6, prefix = 'Progreso: ', suffix = 'Completado: Iniciando', length = 50)
 
-width = 3820
-height = 2160
+width = 1000
+height = 602
 
 rend = Renderer(width, height)
+rend.glBackgroundTexture("Models/Plaza.bmp")
+rend.glClearBG()
 
 rend.vertexShader = shaders.vertexShader
 rend.fragmentShader = shaders.gouradShader
 
-printProgressBar(1, 6, prefix = 'Progreso: ', suffix = 'Completado: Cargando Modelo ', length = 50)
+#printProgressBar(1, 6, prefix = 'Progreso: ', suffix = 'Completado: Cargando Modelo ', length = 50)
 
-rend.glLoadModel("Models/cup.obj", "Models/cup.bmp",translate = (0, 1, -2),
-                 rotate = (-1, 5, 0),
-                 scale = (1,1,1))
+rend.glLoadModel("Models/statue.obj", "Models/cup.bmp", normalMapName=None,translate = (-1.3, 0.8, -8),
+                 rotate = (-0.28, 0, 3.1),
+                 scale = (0.3,0.3,0.3), vertexShader=shaders.vertexShader, 
+                 fragmentShader= shaders.gradientShader) 
+
+rend.glLoadModel("Models/bull.obj", "Models/gold.bmp", normalMapName=None,translate = (-2, -1.5, -5),
+                 rotate = (-0.5, 0, 0),
+                 scale = (0.5,0.5,0.5), vertexShader=shaders.vertexShader, 
+                 fragmentShader= shaders.diffuseShader)
+
+
+rend.glLoadModel("Models/merchant.obj", "Models/basket.bmp", normalMapName=None,translate = (0, -2.4, -6.5),
+                 rotate = (-0.5, 0, -0.02),
+                 scale = (0.75,0.75,0.75), vertexShader=shaders.glitchVertexShader, 
+                 fragmentShader= shaders.glitchFragmentShader)   
+
+rend.glLoadModel("Models/stall2.obj", "Models/gold.bmp", normalMapName="Models/stall_normals.bmp",translate = (2, -2.5, -7),
+                 rotate = (-0.5, -2.7, -0.02),
+                 scale = (1,1,1), vertexShader=shaders.vertexShader, 
+                 fragmentShader= shaders.phongShader) 
+
+
 
 rend.glLookAt(camPos = (0,2,0), eyePos= (0,0,-5))
-""" printProgressBar(2, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Gourud Shader ', length = 50)
+
+#printProgressBar(5, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Glitch Shader ', length = 50)
 
 rend.glRender()
-rend.glFinish("GourudShader.bmp")
+rend.glFinish("output.bmp")
 rend.glClear()
 
-printProgressBar(3, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Phong Shader ', length = 50)
-rend.vertexShader = shaders.vertexShader
-rend.fragmentShader = shaders.phongShader
-
-rend.glRender()
-rend.glFinish("PhongShader.bmp")
-rend.glClear()
-
-printProgressBar(4, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Gradient Shader ', length = 50)
-rend.vertexShader = shaders.vertexShader
-rend.fragmentShader = shaders.gradientShader
-
-rend.glRender()
-rend.glFinish("GradientShader.bmp")
-rend.glClear()
-"""
-printProgressBar(5, 6, prefix = 'Progreso: ', suffix = 'Completado: Generando Glitch Shader ', length = 50)
-rend.vertexShader = shaders.glitchVertexShader
-rend.fragmentShader = shaders.glitchFragmentShader 
-
-rend.glRender()
-rend.glFinish("GlitchShader.bmp")
-rend.glClear()
-
-printProgressBar(6, 6, prefix = 'Progreso: ', suffix = 'Completado: Terminado                    ', length = 50)
+#printProgressBar(6, 6, prefix = 'Progreso: ', suffix = 'Completado: Terminado                    ', length = 50)
     

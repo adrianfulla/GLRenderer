@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Tarea 3 - Camaras
+  Proyecto 1: Rasterizer
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592

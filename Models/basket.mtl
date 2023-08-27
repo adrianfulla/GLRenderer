@@ -1,0 +1,202 @@
+# Blender 3.6.2 MTL File: 'None'
+# www.blender.org
+
+newmtl Apple_red
+Ns 37.000004
+Ka 1.000000 1.000000 1.000000
+Ks 0.540000 0.540000 0.540000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Apple_diff.jpg
+
+newmtl Basket_branch
+Ns 12.000001
+Ka 1.000000 1.000000 1.000000
+Ks 0.531000 0.531000 0.531000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Basket_branch.jpg
+
+newmtl Basket_branch_lace
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.090000 0.090000 0.090000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Straw_diff.jpg
+
+newmtl Corn
+Ns 29.999998
+Ka 1.000000 1.000000 1.000000
+Ks 0.225000 0.225000 0.225000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Corn_diff.jpg
+
+newmtl Corn_Leaf_C1
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.090000 0.090000 0.090000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Ear_Of_Corn_Leaf_Diff.jpg
+
+newmtl Corn_Part_C1
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.090000 0.090000 0.090000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Ear_Of_Corn_Part_Diff.jpg
+
+newmtl Corn_old
+Ns 29.999998
+Ka 1.000000 1.000000 1.000000
+Ks 0.225000 0.225000 0.225000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Corn_old_diff.jpg
+
+newmtl Grapes_berry
+Ns 32.000008
+Ka 1.000000 1.000000 1.000000
+Ks 0.288000 0.288000 0.288000
+Ke 0.137300 0.117600 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Grapes_berry_diff.jpg
+
+newmtl Grapes_berry_red
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.360000 0.360000 0.360000
+Ke 0.150000 0.150000 0.150000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Grapes_berry_red_diff.jpg
+
+newmtl Grapes_branch
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.387000 0.387000 0.387000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Grapes_branch.jpg
+
+newmtl Grapes_branch_red
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.387000 0.387000 0.387000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Grapes_branch_red_diff.jpg
+
+newmtl Marrow
+Ns 39.000008
+Ka 1.000000 1.000000 1.000000
+Ks 0.432000 0.432000 0.432000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Marrow_diff.jpg
+
+newmtl Marrow_2_long
+Ns 39.000008
+Ka 1.000000 1.000000 1.000000
+Ks 0.207000 0.207000 0.207000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Marrow_v2_diff.jpg
+
+newmtl Pear
+Ns 23.000004
+Ka 1.000000 1.000000 1.000000
+Ks 0.540000 0.540000 0.540000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Pear.jpg
+
+newmtl Pear_green
+Ns 15.000002
+Ka 1.000000 1.000000 1.000000
+Ks 0.540000 0.540000 0.540000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Pear_green_diff.jpg
+
+newmtl Pumpkin
+Ns 29.000002
+Ka 1.000000 1.000000 1.000000
+Ks 0.540000 0.540000 0.540000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Pumpkin_diff.jpg
+
+newmtl Pumpkin_orange_spheric
+Ns 25.000004
+Ka 1.000000 1.000000 1.000000
+Ks 0.540000 0.540000 0.540000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Pumpkin_orange_spheric_diff.jpg
+
+newmtl Pumpkin_orange_spheric_2
+Ns 45.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.540000 0.540000 0.540000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Pumpkin_orange_spheric_2_diff.jpg
+
+newmtl Pumpkin_yelow
+Ns 39.000008
+Ka 1.000000 1.000000 1.000000
+Ks 0.540000 0.540000 0.540000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Pumpkin_yelow_diff.jpg
+
+newmtl Pumpkin_yelow_leaf
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.090000 0.090000 0.090000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/drnfu/Downloads/Cornucopia_Basket_with_Food_v2_L1.123c26e34152-69e1-4c4b-882c-169e14190727/Pumpkin_yelow_leaf_diff.jpg

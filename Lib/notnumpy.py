@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Tarea 1 - Lines & Obj Models
+  Proyecto 1: Rasterizer
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
@@ -33,7 +33,10 @@ class Matrix:
         if isinstance(other, Matrix):
             if len(self.mat[0]) != len(other.mat):
                 raise ValueError("The number of columns in the first matrix must match the number of rows in the second matrix for multiplication.")
-            result = [[sum([self.mat[i][k] * other.mat[k][j] for k in range(len(other.mat))]) for j in range(len(other.mat[0]))] for i in range(len(self.mat))]
+            result = [[sum([self.mat[i][k] * other.mat[k][j] 
+                            for k in range(len(other.mat))]) 
+                       for j in range(len(other.mat[0]) if type(other.mat[0]) is not float else 1)] 
+                      for i in range(len(self.mat))]
             return Matrix(result)
         elif isinstance(other, (int, float)):
             result = [[cell * other for cell in row] for row in self.mat]

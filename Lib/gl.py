@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Tarea 1 - Lines & Obj Models
+  Proyecto 1: Rasterizer
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
@@ -14,6 +14,7 @@ from collections import namedtuple
 from math import sin, cos, tan, pi
 import Lib.notnumpy as nnp
 from Lib.Model import Model
+from Lib.texture import Texture
 from Lib.Types import char, word, dword
 
 V3 = namedtuple('V3', ['x', 'y', 'z'])
@@ -40,7 +41,8 @@ class Renderer(object):
         self.glViewPort(0,0,self.width,self.height)
         self.glCamMatrix()
         self.glProjectionMatrix()
-        self.directionalLight = [0,-1,-0.5]
+        self.directionalLight = [-5,0,-7]
+        self.background = None
 
 
     def glClearColor(self, r, g, b):
@@ -58,7 +60,21 @@ class Renderer(object):
     def glClearModel(self):
         self.objects = []
 
-
+    def glBackgroundTexture(self, filename):
+        self.background = Texture(filename)
+        
+    def glClearBG(self):
+        self.glClear()
+        if self.background:
+            for x in range(self.vpX, self.vpX + self.vpWidth + 1):
+                for y in range(self.vpY, self.vpY + self.vpHeight + 1):
+                    u = (x - self.vpX) / self.vpWidth
+                    v = (y - self.vpY) / self.vpHeight
+                    
+                    texColor = self.background.getColor(u, v)
+                    if texColor:
+                        self.glPoint(x,y, color(texColor[0], texColor[1], texColor[2]))
+    
     def glPoint(self, x, y, clr=None):
         if 0 <= x < self.width and 0 <= y < self.height:
             self.pixels[x][y] = clr or self.currColor
@@ -164,7 +180,7 @@ class Renderer(object):
                                            [0,0,-1,0]])
 
 
-    def glTriangleBC(self, verts, texCoords, normals):
+    def glTriangleBC(self, verts, texCoords, normals, normalMap, mMatrix):
         A= verts[0]
         B= verts[1]
         C= verts[2]
@@ -203,14 +219,22 @@ class Renderer(object):
                             if self.fragmentShader != None:
                                 # Mandar los par�metros necesarios al shader
                                 colorP = self.fragmentShader(texture = self.activeTexture,
+                                                             normalMap = normalMap,
                                                              texCoords= texCoords,
                                                              normals= normals,
                                                              dLight= self.directionalLight,
                                                              bCoords= bCoords,
                                                              viewer = self.eyePos,
-                                                             point = bCoords)
+                                                             point = bCoords, 
+                                                             modelMatrix = mMatrix,
+                                                             background = self.background,
+                                                             mapCoords = [x,y],
+                                                             measures = [self.width, self.height])
 
-                                self.glPoint(x, y, color(colorP[0], colorP[1], colorP[2]))
+                                if colorP:
+                                    self.glPoint(x, y, color(colorP[0], colorP[1], colorP[2]))
+                                else:
+                                    self.glPoint(x, y, color(0, 0, 0))
                                 
                             else:
                                 self.glPoint(x, y)
@@ -268,8 +292,10 @@ class Renderer(object):
 
                 limit += 1
 
-    def glLoadModel(self, filename, texName, translate=(0, 0, 0), rotate=(0, 0, 0), scale=(1, 1, 1)):
-        model = Model(filename, translate, rotate, scale)
+    def glLoadModel(self, filename, texName, normalMapName = None, translate=(0, 0, 0), rotate=(0, 0, 0), scale=(1, 1, 1), vertexShader = None, fragmentShader = None):
+        model = Model(filename, normalMapName, translate,rotate, scale, 
+                      (self.vertexShader if vertexShader is None else vertexShader), 
+                      (self.fragmentShader if fragmentShader is None else fragmentShader))
 
         model.loadTexture(texName)
 
@@ -282,6 +308,8 @@ class Renderer(object):
 
         for model in self.objects:
             self.activeTexture = model.texture
+            self.vertexShader = model.vertexShader
+            self.fragmentShader = model.fragmentShader
             mMatrix = self.glModelMatrix(model.translate, model.rotate, model.scale)
 
             for face in model.faces:
@@ -348,15 +376,18 @@ class Renderer(object):
                     tnormals.append(v0)
                     tnormals.append(v2)
                     tnormals.append(v3)
+                    
+                    
+            primitives = self.glPrimitiveAssembly(tVerts, tCoords, tnormals)
+
+
+            for prim in primitives:
+                if (self.primitiveType == TRIANGLES):
+                        self.glTriangleBC(prim[0], prim[1], prim[2], model.normalMap, mMatrix)
 
                 
             
-        primitives = self.glPrimitiveAssembly(tVerts, tCoords, tnormals)
-
-
-        for prim in primitives:
-            if (self.primitiveType == TRIANGLES):
-                    self.glTriangleBC(prim[0], prim[1], prim[2])
+        
 
     def glAddVertices(self, vertices):
         for vert in vertices:
