@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Proyecto 1: Rasterizer
+  Rt1: Spheres, Material & Phong Shading
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
@@ -161,4 +161,3 @@ def subtract(arr1, arr2):
             raise ValueError("Arrays must have the same length for subtraction.")
         
     return [a - b for a, b in zip(arr1, arr2)]
-
