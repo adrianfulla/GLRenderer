@@ -89,6 +89,13 @@ def sub(v1, v2):
         subtracted_tuple = tuple(a - b for a, b in zip(v1, v2))
         return subtracted_tuple
     
+def add(v1, v2):
+        if len(v1) != len(v2):
+            raise ValueError("Tuples must have the same length.")
+        
+        subtracted_tuple = tuple(a + b for a, b in zip(v1, v2))
+        return subtracted_tuple    
+    
 
 def norm(x, ord=None, axis=None, keepdims=False):
         if axis is not None:
