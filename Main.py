@@ -5,49 +5,78 @@
   Graficas por Computadora.
   Sección: 20
 
-  Tarea 1 - Lines & Obj Models
+  Rt1: Spheres, Material & Phong Shading
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
 """
-from Lib.gl import Renderer, color
-import Lib.shaders as shaders
+import pygame
+from pygame.locals import * 
+from Lib.rt import Raytracer
+from Lib.figure import *
+from Lib.lights import *
+from Lib.materials import *
 
-def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
-    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-    filledLength = int(length * iteration // total)
-    bar = fill * filledLength + '-' * (length - filledLength)
-    print(f'\r{prefix} |{bar}| {percent}% {suffix}', end = printEnd)
-    # Print New Line on Complete
-    if iteration == total: 
-        print()
+width = 500
+height = 500
 
-print("Creando output.bmp")
-printProgressBar(0, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
+pygame.init()
 
-width = 3840
-height = 2160
+screen = pygame.display.set_mode((width,height), pygame.DOUBLEBUF | pygame.HWACCEL | pygame.HWSURFACE)
+screen.set_alpha(None)
 
-printProgressBar(1, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
-rend = Renderer(width, height)
-printProgressBar(2, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
-rend.vertexShader = shaders.vertexShader
-rend.fragmentShader = shaders.fragmentShader
+raytracer = Raytracer(screen)
+raytracer.rtClearColor(0.2109,0.30078,0.42578)
 
-rend.glLine((width/2,0), (width/2,height),color(1,1,1))
-rend.glLine((0,height/2), (width,height/2),color(1,1,1))
+boton = Material(diffuse=(0.02734,0.02734,0.0351), spec = 8, ks = 0.02)
+nariz = Material(diffuse=(0.9884,0.2305,0.2304), spec = 6, ks = 0.02)
+cuerpo = Material(diffuse=(1,1,1), spec = 3, ks = 0.02)
+boca = Material(diffuse=(0.3594,0.2969,0.289), spec = 6, ks = 0.02)
+ojo = Material(diffuse=(0.8398,0.7656,0.8008), spec = 9, ks = 0.02)
 
-printProgressBar(3, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
+objetos = [
+            Sphere(position=(0,-1.2,-5), radius = 1.2, material = cuerpo),
+            Sphere(position=(0,0.55,-5), radius = 0.95, material = cuerpo),
+            Sphere(position=(0,1.94,-5), radius = 0.7, material = cuerpo),
+            Sphere(position=(0.145,2.04,-4.1), radius = 0.07, material = ojo),
+            Sphere(position=(-0.145,2.04,-4.1), radius = 0.07, material = ojo),
+            Sphere(position=(-0.142,2,-3.95), radius = 0.03, material = boton),
+            Sphere(position=(0.147,2,-3.95), radius = 0.03, material = boton),
+            Sphere(position=(0,1.75,-4), radius = 0.17, material = nariz),
+            Sphere(position=(-0.25,1.54,-4.15), radius = 0.05, material = boca),
+            Sphere(position=(-0.10,1.49,-4.15), radius = 0.05, material = boca),
+            Sphere(position=(0.10,1.51,-4.15), radius = 0.05, material = boca),
+            Sphere(position=(0.25,1.55,-4.15), radius = 0.05, material = boca),
+            Sphere(position=(0,-1,-4), radius = 0.35, material = boton),
+            Sphere(position=(0,0.15,-4), radius = 0.25, material = boton),
+            Sphere(position=(0,1,-4), radius = 0.15, material = boton)
+          ]
 
-rend.glLoadModel("Models/charging-bull.obj", "Models/charging-bull.bmp", translate=(width/4, height/13, 0), rotate=(1.4, 3.1, 2), scale=(3, 3, 3))
-rend.glLoadModel("Models/charging-bull.obj", "Models/charging-bull.bmp", translate=(3 * width/4, height/2.65, 0), rotate=(1.0, 0.2, 5), scale=(3, 3, 3))
-rend.glLoadModel("Models/charging-bull.obj", "Models/charging-bull.bmp", translate=(width/4, height/1.8, 0), rotate=(1.4, 3.1, 0), scale=(3, 3, 3))
-rend.glLoadModel("Models/charging-bull.obj", "Models/charging-bull.bmp", translate=(3 * width/4, height/1.8, 0), rotate=(1.4, 3.1, -1.0), scale=(3, 3, 3))
+luces = [
+    AmbientLight(intensity=0.05),
+    DirectionalLight(direction=(0,1.15,-2), intensity=0.50),
+    DirectionalLight(direction=(0,0.5,-1), intensity=0.20),
+    PointLight(point=(2.5,0,-5), intensity=1, color= (0.1,0.2,1)),
+    PointLight(point=(-2,-0.3,-5), intensity=1, color= (1,0,1))
+]
 
-printProgressBar(4, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
-rend.glRender()
+for objeto in objetos:
+    raytracer.scene.append(objeto)
 
-printProgressBar(5, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
-rend.glFinish("output.bmp")
+for luz in luces:
+    raytracer.lights.append(luz)
 
-printProgressBar(6, 6, prefix = 'Progreso: ', suffix = 'Completado', length = 50)
+isRunning = True
+while isRunning:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            isRunning = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                isRunning=False
+    
+    raytracer.rtClear()
+    raytracer.rtRender()
+    pygame.display.flip()
+                
+pygame.quit()           
