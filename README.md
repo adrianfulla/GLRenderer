@@ -13,9 +13,10 @@ Para obtener la nota completa de ésta tarea deben entregar lo siguiente:
 - El programa principal debe mostrar la siguiente figura (o lo más cercano posible) en pantalla o en un BMP:
 
 ## Inicialización
+El Rasterizador puede ser ejecutado mediante la ejecución del archivo Main.py, dentro de una ventana de shell, navegar al directorio donde se encuentran los archivos y correr el siguiente comando:
   ```bash
     python3 Main.py
   ```  
 
 ## Resultado
- 
+ !![Alt text](/Preview.png)
