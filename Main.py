@@ -27,7 +27,7 @@ screen.set_alpha(None)
 
 raytracer = Raytracer(screen)
 raytracer.envMap = pygame.image.load("Res/parkinglot.bmp")
-raytracer.rtClearColor(0.1,0.1,0.1)
+raytracer.rtClearColor(0.25,0.25,0.25)
 
 blanco = Material(diffuse=(255,255,255), spec = 10, ks = 0.02)
 oro = Material(diffuse=(206,163,96), spec = 256, ks = 0.2)
