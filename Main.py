@@ -17,8 +17,8 @@ from Lib.figure import *
 from Lib.lights import *
 from Lib.materials import *
 
-width = 256
-height = 256
+width = 500
+height = 500
 
 pygame.init()
 
@@ -27,6 +27,7 @@ screen.set_alpha(None)
 
 raytracer = Raytracer(screen)
 raytracer.envMap = pygame.image.load("Res/parkinglot.bmp")
+skyTexture = pygame.image.load("Res/sky.jpg")
 raytracer.rtClearColor(0.25,0.25,0.25)
 
 blanco = Material(diffuse=(255,255,255), spec = 10, ks = 0.02)
@@ -34,13 +35,16 @@ oro = Material(diffuse=(206,163,96), spec = 256, ks = 0.2)
 haze = Material(diffuse=(95,75,139), spec = 32, ks = 0.1)
 mirror = Material(diffuse=(230,230, 230), spec =64, ks = 0.02, matType=REFLECTIVE)
 bMirror = Material(diffuse=(100,100, 255), spec =32, ks = 0.02, matType=REFLECTIVE)
+sky = Material(spec=64, ks=0.1, texture=skyTexture, matType=REFLECTIVE)
+
+
 
 
 objetos = [
             Sphere(position=(1,1,-5), radius = 0.5, material = oro),
             Sphere(position=(-2,0,-7), radius = 2, material = mirror),
             Sphere(position=(0.5,-1,-5), radius = 0.3, material = haze),
-            Sphere(position=(2,0,-7), radius = 2, material = bMirror),
+            Sphere(position=(2,0,-7), radius = 2, material = sky),
             ]
 
 luces = [

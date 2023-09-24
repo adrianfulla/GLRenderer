@@ -11,12 +11,14 @@
   @author Adrian Fulladolsa Palma | Carne 21592
 """
 import Lib.notnumpy as nnp
+from math import tan, pi, atan2, acos
 
 class Intercept(object):
-    def __init__(self, distance, point, normal, obj):
+    def __init__(self, distance, point, normal, texcoords, obj):
         self.distance = distance
         self.point = point
         self.normal = normal
+        self.texcoords = texcoords
         self.obj = obj
 
 class Shape(object):
@@ -54,8 +56,12 @@ class Sphere(Shape):
         normal = nnp.sub(p,self.position)
         normal = nnp.divTF(normal, nnp.norm(normal))
         
+        u = atan2(normal[2], normal[0]) / (2 * pi) + 0.5
+        v = acos(normal[1]) / pi
+        
         return Intercept(distance = t0,
                          point = p,
                          normal = normal,
+                         texcoords=(u, v),
                          obj = self)
         
