@@ -93,8 +93,8 @@ def add(v1, v2):
         if len(v1) != len(v2):
             raise ValueError("Tuples must have the same length.")
         
-        subtracted_tuple = tuple(a + b for a, b in zip(v1, v2))
-        return subtracted_tuple    
+        added_tuple = tuple(a + b for a, b in zip(v1, v2))
+        return added_tuple    
     
 
 def norm(x, ord=None, axis=None, keepdims=False):
@@ -160,7 +160,7 @@ def dot_product(array1, array2):
         dot_product = sum(a * b for a, b in zip(array1, array2))
         return dot_product
     
-def multiply(i, arr):
+def multiply(i = 1 , arr = [1]):
     return [i * x for x in arr]
 
 def subtract(arr1, arr2):

@@ -17,8 +17,8 @@ from Lib.figure import *
 from Lib.lights import *
 from Lib.materials import *
 
-width = 500
-height = 500
+width = 256
+height = 256
 
 pygame.init()
 
@@ -36,15 +36,17 @@ haze = Material(diffuse=(95,75,139), spec = 32, ks = 0.1)
 mirror = Material(diffuse=(230,230, 230), spec =64, ks = 0.02, matType=REFLECTIVE)
 bMirror = Material(diffuse=(100,100, 255), spec =32, ks = 0.02, matType=REFLECTIVE)
 sky = Material(spec=64, ks=0.1, texture=skyTexture, matType=REFLECTIVE)
+glass = Material(diffuse=(230,2, 230), spec =64, ior = 1.5, ks = 0.02, matType=TRANSPARENT)
 
 
 
 
 objetos = [
-            Sphere(position=(1,1,-5), radius = 0.5, material = oro),
-            Sphere(position=(-2,0,-7), radius = 2, material = mirror),
-            Sphere(position=(0.5,-1,-5), radius = 0.3, material = haze),
-            Sphere(position=(2,0,-7), radius = 2, material = sky),
+            # Sphere(position=(1,1,-5), radius = 0.5, material = oro),
+            # Sphere(position=(-2,0,-7), radius = 2, material = mirror),
+            # Sphere(position=(0.5,-1,-5), radius = 0.3, material = haze),
+            # Sphere(position=(2,0,-7), radius = 2, material = sky),
+            Sphere(position=(0,0,-5), radius = 2, material = glass)
             ]
 
 luces = [
@@ -62,6 +64,7 @@ for luz in luces:
 raytracer.rtClear()
 raytracer.rtRender()
 
+print("\nRender Time:",pygame.time.get_ticks()/1000, "secs")
 
 isRunning = True
 while isRunning:

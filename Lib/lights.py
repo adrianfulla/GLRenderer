@@ -11,6 +11,7 @@
   @author Adrian Fulladolsa Palma | Carne 21592
 """
 import Lib.notnumpy as nnp
+from math import acos, asin
 
 def reflectVector(normal, direction):
     reflect = 2*nnp.dot_product(normal, direction)
@@ -19,6 +20,32 @@ def reflectVector(normal, direction):
     reflect = nnp.divTF(reflect , nnp.norm(reflect))
     
     return reflect
+
+def totalInternalReflection(incident, normal, n1, n2):
+    if n1 < n2:
+        n1, n2 = n2, n1
+        
+    Ai = acos(nnp.dot_product(incident, normal))
+    Ac = asin(n2/n1)
+    
+    return Ai >= Ac
+
+def fresnel(n1, n2):
+    Kr = ((n1**0.5 - n2**0.5)**2) / ((n1**0.5 + n2**0.5)**2)
+    Kt = 1 - Kr
+    
+    return Kr, Kt
+
+def refractVector(incident, normal ,n1, n2):
+    #Snell's Law
+    
+    refract = nnp.multiply(nnp.dot_product(incident, normal), normal)
+    refract = nnp.sub(incident, refract)
+    refract = n1 * refract
+    refract = refract / n2
+    refract = refract / nnp.norm(refract)
+    
+    return refract
 
 class Light(object):
     def __init__(self, intensity = 1, color = (1,1,1), lightType = "None"):
