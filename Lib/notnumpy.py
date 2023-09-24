@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Rt1: Spheres, Material & Phong Shading
+  Rt2: Opaque, Reflective & Refractive Materials
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
