@@ -22,7 +22,7 @@ height = 256
 
 pygame.init()
 
-screen = pygame.display.set_mode((width,height), pygame.DOUBLEBUF | pygame.HWACCEL | pygame.HWSURFACE)
+screen = pygame.display.set_mode((width,height), pygame.DOUBLEBUF | pygame.HWACCEL | pygame.HWSURFACE | pygame.SCALED)
 screen.set_alpha(None)
 
 raytracer = Raytracer(screen)

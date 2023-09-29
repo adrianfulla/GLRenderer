@@ -22,30 +22,39 @@ def reflectVector(normal, direction):
     return reflect
 
 def totalInternalReflection(incident, normal, n1, n2):
-    if n1 < n2:
+    c1 = nnp.dot_product(normal, incident)
+    if c1 < 0:
+        c1 = -c1
+    else:
+        normal = nnp.multiply(-1, normal)
         n1, n2 = n2, n1
         
-    Ai = acos(nnp.dot_product(incident, normal))
-    Ac = asin(n2/n1)
+    if n1 < n2:
+        return False
     
-    return Ai >= Ac
-
+    theta1 = acos(c1)
+    
+    thetaC = asin(n2/n1)
+    return theta1 >+ thetaC
+    
 def fresnel(n1, n2):
-    Kr = ((n1**0.5 - n2**0.5)**2) / ((n1**0.5 + n2**0.5)**2)
-    Kt = 1 - Kr
-    
-    return Kr, Kt
+    pass
 
 def refractVector(incident, normal ,n1, n2):
-    #Snell's Law
+    c1 = nnp.dot_product(normal, incident)
+    if c1 < 0:
+        c1 = -c1
+    else:
+        normal = nnp.multiply(-1, normal)
+        n1, n2 = n2, n1
     
-    refract = nnp.multiply(nnp.dot_product(incident, normal), normal)
-    refract = nnp.sub(incident, refract)
-    refract = n1 * refract
-    refract = refract / n2
-    refract = refract / nnp.norm(refract)
+    n = n1 / n2
     
-    return refract
+    T = nnp.multiply(n, incident) + normal
+    T = nnp.multiply((n * c1 - (1 - n**2 * (1 - c1**2 )) ** 0.5), T)
+    T = nnp.divTF(T, nnp.norm(T))
+    
+    return T
 
 class Light(object):
     def __init__(self, intensity = 1, color = (1,1,1), lightType = "None"):

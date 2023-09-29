@@ -40,6 +40,7 @@ class Sphere(Shape):
         
         l = nnp.sub(self.position, orig)
         lengthL = nnp.norm(l)
+        print(l, direction)
         tca = nnp.dot_product(l,direction)
         
         d = (lengthL**2 - tca**2)**0.5
