@@ -35,12 +35,8 @@ class Sphere(Shape):
         super().__init__(position,material)
         
     def ray_intersect(self, orig, direction):
-        if orig is None or direction is None:
-            return None
-        
         l = nnp.sub(self.position, orig)
         lengthL = nnp.norm(l)
-        print(l, direction)
         tca = nnp.dot_product(l,direction)
         
         d = (lengthL**2 - tca**2)**0.5

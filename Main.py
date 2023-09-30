@@ -31,28 +31,30 @@ skyTexture = pygame.image.load("Res/sky.jpg")
 raytracer.rtClearColor(0.25,0.25,0.25)
 
 blanco = Material(diffuse=(255,255,255), spec = 10, ks = 0.02)
-oro = Material(diffuse=(206,163,96), spec = 256, ks = 0.2)
+oro = Material(diffuse=(206,163,96), spec = 256, ks = 0.2, matType=OPAQUE)
 haze = Material(diffuse=(95,75,139), spec = 32, ks = 0.1)
 mirror = Material(diffuse=(230,230, 230), spec =64, ks = 0.02, matType=REFLECTIVE)
 bMirror = Material(diffuse=(100,100, 255), spec =32, ks = 0.02, matType=REFLECTIVE)
 sky = Material(spec=64, ks=0.1, texture=skyTexture, matType=REFLECTIVE)
-glass = Material(diffuse=(230,2, 230), spec =64, ior = 1.5, ks = 0.02, matType=TRANSPARENT)
+glass = Material(diffuse=(255,255, 255), spec =64, ior = 1.5, ks = 0.02, matType=TRANSPARENT)
+texGlass = Material(diffuse=(0,255, 255), spec =64, ior = 1.5, ks = 0.02, matType=TRANSPARENT)
 
 
 
 
 objetos = [
-            Sphere(position=(0,1,-5), radius = 0.5, material = oro),
-            Sphere(position=(0,-1,-5), radius = 0.5, material = mirror),
-            Sphere(position=(1.7,-1,-5), radius = 0.5, material = haze),
-            Sphere(position=(1.7,1,-5), radius = 0.5, material = sky),
-            Sphere(position=(-1.7,1,-5), radius = 0.5, material = glass),
-            Sphere(position=(-1.7,-1,-5), radius = 0.5, material = glass)
+            Sphere(position=(0,1,-5), radius = 0.8, material = oro),
+            Sphere(position=(0,-1,-5), radius = 0.8, material = haze),
+            Sphere(position=(1.7,-1,-5), radius = 0.8, material = mirror),
+            Sphere(position=(1.7,1,-5), radius = 0.8, material = sky),
+            Sphere(position=(-1.7,1,-5), radius = 0.8, material = glass),
+            Sphere(position=(-1.7,-1,-5), radius = 0.8, material = texGlass)
             ]
 
 luces = [
-    AmbientLight(intensity=0.01),
+    AmbientLight(intensity=0.05, color=(1,1,0)),
     DirectionalLight(direction=(-1,-1,-1), intensity=0.70),
+    DirectionalLight(direction=(1,1,-1), intensity=0.70),
     PointLight(point=(1.5,0,-5), intensity=1, color= (1,0,1))
 ]
 

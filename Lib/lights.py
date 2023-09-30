@@ -66,7 +66,7 @@ def refractVector(incident, normal ,n1, n2):
     
     n = n1 / n2
     
-    T = nnp.multiply(n, incident) + normal
+    T = nnp.add(nnp.multiply(n, incident), normal)
     T = nnp.multiply((n * c1 - (1 - n**2 * (1 - c1**2 )) ** 0.5), T)
     T = nnp.divTF(T, nnp.norm(T))
     

@@ -75,7 +75,7 @@ class Raytracer(object):
             else:
                 self.screen.set_at((x,y), self.currentColor)
     
-    def rtCastRay(self,orig,dir,sceneObj = None, recursion = 0):
+    def rtCastRay(self,orig,dire,sceneObj = None, recursion = 0):
         if recursion >= MAX_RECURSION_DEPTH:
             return None
        
@@ -85,7 +85,7 @@ class Raytracer(object):
         
         for obj in self.scene:
             if sceneObj != obj:
-                intercept = obj.ray_intersect(orig, dir)
+                intercept = obj.ray_intersect(orig, dire)
                 if intercept != None:
                     if intercept.distance < depth:
                         hit = intercept
@@ -149,8 +149,8 @@ class Raytracer(object):
             
         elif material.matType == REFLECTIVE:
             reflect = reflectVector(intercept.normal, nnp.multiply(-1, rayDirection))
-            reflectIntercept = self.rtCastRay(orig=intercept.point, dir=reflect, sceneObj=intercept.obj, recursion=recursion + 1)
-            reflectColor = self.rtRayColor(orig=reflectIntercept, dir=reflect, recursion=recursion + 1)
+            reflectIntercept = self.rtCastRay(orig=intercept.point, dire=reflect, sceneObj=intercept.obj, recursion=recursion + 1)
+            reflectColor = self.rtRayColor(intercept=reflectIntercept, rayDirection=reflect, recursion=recursion + 1)
             
             for light in self.lights:
                 if light.lightType != "Ambient":
@@ -161,7 +161,7 @@ class Raytracer(object):
                         lightDir = nnp.sub(light.point, intercept.point)
                         lightDir = nnp.divTF(lightDir, nnp.norm(lightDir))
                         
-                    shadowIntersect = self.rtCastRay(orig=intercept.point, dir=lightDir, sceneObj=intercept.obj)
+                    shadowIntersect = self.rtCastRay(orig=intercept.point, dire=lightDir, sceneObj=intercept.obj)
                     
                     if shadowIntersect==None:
                         specularColor = [(specularColor[i]+light.getSpecularColor(intercept, self.camPosition)[i]) for i in range(3)]
@@ -173,25 +173,25 @@ class Raytracer(object):
             
             factor = -1
             negativeRayDirection = [elemento * factor for elemento in rayDirection]
-            reflectRay = reflect(intercept.normal, negativeRayDirection)
+            reflectRay = reflectVector(intercept.normal, negativeRayDirection)
             reflectOrigin = nnp.add(intercept.point, bias) if isOutside else nnp.sub(intercept.point, bias)
             reflectIntercept = self.rtCastRay(reflectOrigin, reflectRay, None, recursion + 1)
             reflectColor = self.rtRayColor(reflectIntercept, reflectRay, recursion + 1)
 
             for light in self.lights:
-                if light.type != "AMBIENT":
+                if light.lightType != "Ambient":
                     shadowDirection = None
-                    if light.type == "DIRECTIONAL":
+                    if light.lightType == "Directional":
                         shadowDirection = [i * -1 for i in light.direction]
-                    if light.type == "POINT":
-                        lightDirection = nnp.sub(light.position, intercept.point)
-                        shadowDirection = nnp.norm(lightDirection)
-
+                    if light.lightType == "Point":
+                        lightDirection = nnp.sub(light.point, intercept.point)
+                        shadowDirection = nnp.divTF(lightDirection, nnp.norm(lightDirection))
+                        
                     shadowIntersect = self.rtCastRay(intercept.point, shadowDirection, intercept.obj)
 
                     if shadowIntersect is None:
-                        specColor = light.getSpecularColor(intercept, self.cameraPosition)
-                        specularLightColor = [specularLightColor[i] + specColor[i] for i in range(3)]
+                        specColor = light.getSpecularColor(intercept, self.camPosition)
+                        specularColor = [specularColor[i] + specColor[i] for i in range(3)]
 
             if not totalInternalReflection(intercept.normal, rayDirection, 1.0, intercept.obj.material.ior):
                 refractRay = refractVector(intercept.normal, rayDirection, 1.0, intercept.obj.material.ior)
