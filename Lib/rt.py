@@ -167,19 +167,41 @@ class Raytracer(object):
                         specularColor = [(specularColor[i]+light.getSpecularColor(intercept, self.camPosition)[i]) for i in range(3)]
                         
         elif material.matType == TRANSPARENT:
-           outside = nnp.dot_product(rayDirection, intercept.normal) < 0
-           bias = nnp.multiply(0.001,intercept.normal)
-           
-        #    reflect = reflectVector(intercept.normal, nnp.multiply(-1, rayDirection))
-        #    reflectOrig = nnp.add(intercept.point, bias) if outside else nnp.sub(intercept.point, bias)
-        #    reflectIntercept = self.rtCastRay(reflectOrig, reflect, None, recursion + 1)
-        #    reflectColor = self.rtRayColor(reflectIntercept, reflect, recursion+1)
-        
-        if not totalInternalReflection(intercept.normal, rayDirection, 1.0, material.ior):
-            refract = refractVector(intercept.normal, nnp.multiply(-1, rayDirection), 1.0, material.ior)
-            refractOrig = nnp.sub(intercept.point, bias) if outside else nnp.add(intercept.point, bias)
-            refractIntercept = self.rtCastRay(refractOrig, refract, None, recursion + 1)
-            refractColor = self.rtRayColor(refractIntercept, refract, recursion+1)
+            isOutside = nnp.dot_product(rayDirection, intercept.normal) < 0
+            factor = 0.001
+            bias = [elemento * factor for elemento in intercept.normal]
+            
+            factor = -1
+            negativeRayDirection = [elemento * factor for elemento in rayDirection]
+            reflectRay = reflect(intercept.normal, negativeRayDirection)
+            reflectOrigin = nnp.add(intercept.point, bias) if isOutside else nnp.sub(intercept.point, bias)
+            reflectIntercept = self.rtCastRay(reflectOrigin, reflectRay, None, recursion + 1)
+            reflectColor = self.rtRayColor(reflectIntercept, reflectRay, recursion + 1)
+
+            for light in self.lights:
+                if light.type != "AMBIENT":
+                    shadowDirection = None
+                    if light.type == "DIRECTIONAL":
+                        shadowDirection = [i * -1 for i in light.direction]
+                    if light.type == "POINT":
+                        lightDirection = nnp.sub(light.position, intercept.point)
+                        shadowDirection = nnp.norm(lightDirection)
+
+                    shadowIntersect = self.rtCastRay(intercept.point, shadowDirection, intercept.obj)
+
+                    if shadowIntersect is None:
+                        specColor = light.getSpecularColor(intercept, self.cameraPosition)
+                        specularLightColor = [specularLightColor[i] + specColor[i] for i in range(3)]
+
+            if not totalInternalReflection(intercept.normal, rayDirection, 1.0, intercept.obj.material.ior):
+                refractRay = refractVector(intercept.normal, rayDirection, 1.0, intercept.obj.material.ior)
+                refractOrigin = nnp.sub(intercept.point, bias) if isOutside else nnp.add(intercept.point, bias)
+                refractIntercept = self.rtCastRay(refractOrigin, refractRay, None, recursion + 1)
+                refractColor = self.rtRayColor(refractIntercept, refractRay, recursion + 1)
+
+                kr, kt = fresnel(intercept.normal, rayDirection, 1.0, intercept.obj.material.ior)
+                reflectColor = nnp.multiply(kr, reflectColor)
+                refractColor = nnp.multiply(kt, refractColor)           
 
             
         lightColor = [(ambientColor[i]+diffuseColor[i]+specularColor[i] + reflectColor[i] + refractColor[i]) for i in range(3)]  

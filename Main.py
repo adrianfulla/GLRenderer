@@ -42,11 +42,12 @@ glass = Material(diffuse=(230,2, 230), spec =64, ior = 1.5, ks = 0.02, matType=T
 
 
 objetos = [
-            # Sphere(position=(1,1,-5), radius = 0.5, material = oro),
-            # Sphere(position=(-2,0,-7), radius = 2, material = mirror),
-            # Sphere(position=(0.5,-1,-5), radius = 0.3, material = haze),
-            # Sphere(position=(2,0,-7), radius = 2, material = sky),
-            Sphere(position=(0,0,-5), radius = 2, material = glass)
+            Sphere(position=(0,1,-5), radius = 0.5, material = oro),
+            Sphere(position=(0,-1,-5), radius = 0.5, material = mirror),
+            Sphere(position=(1.7,-1,-5), radius = 0.5, material = haze),
+            Sphere(position=(1.7,1,-5), radius = 0.5, material = sky),
+            Sphere(position=(-1.7,1,-5), radius = 0.5, material = glass),
+            Sphere(position=(-1.7,-1,-5), radius = 0.5, material = glass)
             ]
 
 luces = [

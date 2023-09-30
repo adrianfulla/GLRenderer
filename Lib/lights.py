@@ -37,8 +37,24 @@ def totalInternalReflection(incident, normal, n1, n2):
     thetaC = asin(n2/n1)
     return theta1 >+ thetaC
     
-def fresnel(n1, n2):
-    pass
+def fresnel(normal, incident, n1, n2):
+    c1 = nnp.dot_product(normal, incident)
+
+    if c1 < 0:
+        c1 = -c1
+    else:
+        n1, n2 = n2, n1
+
+    s2 = (n1 * (1 - c1 ** 2) ** 0.5) / n2
+    c2 = (1 - s2 ** 2) ** 0.5
+
+    f1 = ((n2 * c1 - n1 * c2) / (n2 * c1 + n1 * c2)) ** 2
+    f2 = ((n1 * c2 - n2 * c1) / (n1 * c2 + n2 * c1)) ** 2
+
+    kr = (f1 + f2) / 2
+    kt = 1 - kr
+
+    return kr, kt
 
 def refractVector(incident, normal ,n1, n2):
     c1 = nnp.dot_product(normal, incident)
