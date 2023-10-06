@@ -1,18 +1,16 @@
 # Rt3: Planes, Disks and Cubes
 Objetivos:
 
-- Que los alumnos preparen el ambiente de desarrollo para un modelo de iluminación simple.
-- Que los alumnos puedan dibujar esferas con materiales opacos, reflectivos y transparentes.
+- Que los alumnos puedan dibujar planos, discos y cubos con su RayTracer.
 
 Requerimientos:
 
 Para obtener la nota completa de ésta tarea deben entregar lo siguiente:
 
-- Código fuente capaz de renderizar esferas con distintos tipos de materiales.
-- Cargar una textura que sirva de Environment Map en la escena.
-- El programa principal debe cargar y mostrar seis esferas diferentes de distintos colores y propiedades: 2 opacas, 2 reflectivas y 2 transparentes.
+- Código fuente capaz de renderizar planos, discos y cubos por medio de un Ray Intersect Algorithm.
+- El programa principal debe mostrar un cuarto hecho con planos similar a la imagen (mínimo de cinco planos, material de su elección). Dentro del cuarto colocar dos cubos en cualquier posición y un disco en cualquier posición y orientación.
+- Usen los materiales que quieran.
 
-Las esferas deben ser completamente visibles en el FrameBuffer final.
 
 ## Inicialización
 El Rasterizador puede ser ejecutado mediante la ejecución del archivo Main.py, dentro de una ventana de shell, navegar al directorio donde se encuentran los archivos y correr el siguiente comando:
@@ -21,4 +19,4 @@ El Rasterizador puede ser ejecutado mediante la ejecución del archivo Main.py, 
   ```  
 
 ## Resultado
-![Alt text](/Preview.png)
+
