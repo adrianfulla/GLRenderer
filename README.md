@@ -1,4 +1,4 @@
-# Rt2: Opaque, Reflective & Refractive Materials
+# Rt3: Planes, Disks and Cubes
 Objetivos:
 
 - Que los alumnos preparen el ambiente de desarrollo para un modelo de iluminación simple.

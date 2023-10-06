@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Rt2: Opaque, Reflective & Refractive Materials
+  Rt3: Planes, Disks and Cubes
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
