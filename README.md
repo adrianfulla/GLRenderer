@@ -19,4 +19,4 @@ El Rasterizador puede ser ejecutado mediante la ejecución del archivo Main.py, 
   ```  
 
 ## Resultado
-
+ ![Alt text](/Preview.png)

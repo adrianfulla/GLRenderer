@@ -16,8 +16,6 @@ from Lib.materials import *
 from Lib.lights import *
 import Lib.notnumpy as nnp
 import pygame
-import numpy as np
-
 
 MAX_RECURSION_DEPTH = 3
 
@@ -112,8 +110,9 @@ class Raytracer(object):
         material = intercept.obj.material
         surfaceColor = material.diffuse
         if material.texture and intercept.texcoords:
-            tX = intercept.texcoords[0] * material.texture.get_width()
-            tY = intercept.texcoords[1] * material.texture.get_height()
+            #intercept.texcoords = (min(1, intercept.texcoords[0]), min(1, intercept.texcoords[1]))   
+            tX = intercept.texcoords[0] * material.texture.get_width() - 1
+            tY = intercept.texcoords[1] * material.texture.get_height() - 1
             texColor = material.texture.get_at((int(tX), int(tY)))
             texColor = [i / 255 for i in texColor]
             surfaceColor = [surfaceColor[i] * texColor[i] for i in range(3)]
@@ -201,7 +200,7 @@ class Raytracer(object):
 
                 kr, kt = fresnel(intercept.normal, rayDirection, 1.0, intercept.obj.material.ior)
                 reflectColor = nnp.multiply(kr, reflectColor)
-                refractColor = nnp.multiply(kt, refractColor)           
+                refractColor = nnp.multiply(kt, refractColor)               
 
             
         lightColor = [(ambientColor[i]+diffuseColor[i]+specularColor[i] + reflectColor[i] + refractColor[i]) for i in range(3)]  

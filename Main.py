@@ -26,36 +26,32 @@ screen = pygame.display.set_mode((width,height), pygame.DOUBLEBUF | pygame.HWACC
 screen.set_alpha(None)
 
 raytracer = Raytracer(screen)
-raytracer.envMap = pygame.image.load("Res/parkinglot.bmp")
 skyTexture = pygame.image.load("Res/sky.jpg")
 raytracer.rtClearColor(0.25,0.25,0.25)
 
 blanco = Material(diffuse=(255,255,255), spec = 10, ks = 0.02)
+red = Material(diffuse=(255,0,0), spec = 10, ks = 0.02)
 oro = Material(diffuse=(206,163,96), spec = 256, ks = 0.2, matType=OPAQUE)
 haze = Material(diffuse=(95,75,139), spec = 32, ks = 0.1)
-mirror = Material(diffuse=(230,230, 230), spec =64, ks = 0.02, matType=REFLECTIVE)
-bMirror = Material(diffuse=(100,100, 255), spec =32, ks = 0.02, matType=REFLECTIVE)
+mirror = Material(diffuse=(200,200, 200), spec =64, ks = 0.02, matType=REFLECTIVE)
 sky = Material(spec=64, ks=0.1, texture=skyTexture, matType=REFLECTIVE)
-glass = Material(diffuse=(255,255, 255), spec =64, ior = 1.5, ks = 0.02, matType=TRANSPARENT)
-texGlass = Material(diffuse=(0,255, 255), spec =64, ior = 1.5, ks = 0.02, matType=TRANSPARENT)
-
-
-
+grass = Material(diffuse=(100,225,100), spec = 46, ks = 0.05)
 
 objetos = [
-            Sphere(position=(0,1,-5), radius = 0.8, material = oro),
-            Sphere(position=(0,-1,-5), radius = 0.8, material = haze),
-            Sphere(position=(1.7,-1,-5), radius = 0.8, material = mirror),
-            Sphere(position=(1.7,1,-5), radius = 0.8, material = sky),
-            Sphere(position=(-1.7,1,-5), radius = 0.8, material = glass),
-            Sphere(position=(-1.7,-1,-5), radius = 0.8, material = texGlass)
+            Plane(position=(0,-2,0), normal=(0,1,-0.02), material=blanco),
+            Plane(position=(0,5,0), normal=(0,1,0.2), material=oro),
+            Plane(position=(4,0,0), normal=(1,0,0.2), material=haze),
+            Plane(position=(-4,0,0), normal=(1,0,-0.2), material=haze),
+            Plane(position=(0,0,-150), normal=(0,0,0.02), material=red),
+            Plane(position=(0,0,2), normal=(0,0,0.02), material=red),
+            Disk(position=(0.5,0,-15),  normal=(-0.5,0,15),radius = 1.5, material = mirror),
+            AABB(position=(-1,-0.5,-7), size=(1,1.2,1), material=sky),
+            AABB(position=(2,1,-9), size=(1.2,1,1), material=grass)
+            
             ]
 
 luces = [
-    AmbientLight(intensity=0.05, color=(1,1,0)),
-    DirectionalLight(direction=(-1,-1,-1), intensity=0.70),
-    DirectionalLight(direction=(1,1,-1), intensity=0.70),
-    PointLight(point=(1.5,0,-5), intensity=1, color= (1,0,1))
+    AmbientLight(intensity=0.5, color=(1,0.8,1)),
 ]
 
 for objeto in objetos:
