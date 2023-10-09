@@ -26,6 +26,7 @@ screen = pygame.display.set_mode((width,height), pygame.DOUBLEBUF | pygame.HWACC
 screen.set_alpha(None)
 
 raytracer = Raytracer(screen)
+raytracer.envMap = pygame.image.load("Res/City.jpg")
 skyTexture = pygame.image.load("Res/sky.jpg")
 raytracer.rtClearColor(0.25,0.25,0.25)
 
@@ -38,15 +39,7 @@ sky = Material(spec=64, ks=0.1, texture=skyTexture, matType=REFLECTIVE)
 grass = Material(diffuse=(100,225,100), spec = 46, ks = 0.05)
 
 objetos = [
-            Plane(position=(0,-2,0), normal=(0,1,-0.02), material=blanco),
-            Plane(position=(0,5,0), normal=(0,1,0.2), material=oro),
-            Plane(position=(4,0,0), normal=(1,0,0.2), material=haze),
-            Plane(position=(-4,0,0), normal=(1,0,-0.2), material=haze),
-            Plane(position=(0,0,-150), normal=(0,0,0.02), material=red),
-            Plane(position=(0,0,2), normal=(0,0,0.02), material=red),
-            Disk(position=(0.5,0,-15),  normal=(-0.5,0,15),radius = 1.5, material = mirror),
-            AABB(position=(-1,-0.5,-7), size=(1,1.2,1), material=sky),
-            AABB(position=(2,1,-9), size=(1.2,1,1), material=grass)
+            Sphere(position=(0,0,0), radius=1.5, material=haze)
             
             ]
 
