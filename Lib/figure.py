@@ -12,6 +12,7 @@
 """
 import Lib.notnumpy as nnp
 from math import tan, pi, atan2, acos
+import numpy as np
 
 class Intercept(object):
     def __init__(self, distance, point, normal, texcoords, obj):
@@ -172,5 +173,55 @@ class AABB(Shape):
                          texcoords= (u,v),
                          obj= self) 
 
+
+class OvalSphere(Shape):
+    def __init__(self,position,radius,material):
+        self.radii = radius
+        super().__init__(position,material)
         
-        
+    def ray_intersect(self, orig, direction):
+        # Transform the ray to local coordinates
+        l = np.array(np.subtract(orig, self.position), dtype=np.float64)  # Ensure l is float64
+        self.radii = np.array(self.radii, dtype=np.float64)
+        l /= self.radii  # Normalize by the radii
+        direction /= self.radii  # Normalize the ray direction
+
+        # Calculate the coefficients of the quadratic equation
+        a = np.dot(direction, direction)
+        b = 2.0 * np.dot(direction, l)
+        c = np.dot(l, l) - 1.0  # The radii are normalized, so this is 1.0
+
+        # Calculate the discriminant
+        discriminant = b * b - 4 * a * c
+
+        if discriminant < 0:
+            # No intersection
+            return None
+
+        # Calculate the two solutions for t
+        t1 = (-b + np.sqrt(discriminant)) / (2 * a)
+        t2 = (-b - np.sqrt(discriminant)) / (2 * a)
+
+        if t1 < 0 and t2 < 0:
+            # Both intersections are behind the ray's origin
+            return None
+
+        # Use the nearest intersection point
+        t = t1 if t1 < t2 else t2
+        p = np.add(orig, np.multiply(t, direction))
+
+        # Calculate the normal at the intersection point
+        normal = np.subtract(p, self.position)
+        normal /= self.radii  # Normalize by the radii
+
+        # Normalize the normal vector
+        normal /= np.linalg.norm(normal)
+        normal *= -1
+
+        # Calculate texture coordinates (u, v)
+        phi = np.arctan2(normal[1], normal[0])
+        theta = np.arccos(normal[2])
+        u = 1 - (phi + np.pi) / (2 * np.pi)
+        v = (theta + np.pi / 2) / np.pi
+
+        return Intercept(distance=t, point=p, normal=normal, texcoords=(u, v), obj=self)
