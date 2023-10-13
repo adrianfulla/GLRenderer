@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Rt3: Planes, Disks and Cubes
+  Lab 3: Ray-Intersect Algorithm, New Shapes
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
