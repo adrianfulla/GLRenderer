@@ -138,13 +138,14 @@ class Raytracer(object):
                         lightDir = [(i*-1) for i in light.direction]
                     elif light.lightType == "Point":
                         lightDir = nnp.sub(light.point, intercept.point)
-                        lightDir = nnp.divTF(lightDir, nnp.norm(lightDir))
+                        lightDistance = nnp.norm(lightDir)
+                        lightDir = nnp.divTF(lightDir, lightDistance)
                         
-                    shadowIntersect = self.rtCastRay(intercept.point, lightDir, intercept.obj)
+                        shadowIntersect = self.rtCastRay(intercept.point, lightDir, intercept.obj)
                     
-                    if shadowIntersect==None:
-                        diffuseColor = [(diffuseColor[i]+light.getDiffuseColor(intercept)[i]) for i in range(3)]
-                        specularColor = [(specularColor[i]+light.getSpecularColor(intercept, self.camPosition)[i]) for i in range(3)]
+                        if shadowIntersect==None or (light.lightType=="Point" and shadowIntersect != None and shadowIntersect.distance > lightDistance):
+                            diffuseColor = [(diffuseColor[i]+light.getDiffuseColor(intercept)[i]) for i in range(3)]
+                            specularColor = [(specularColor[i]+light.getSpecularColor(intercept, self.camPosition)[i]) for i in range(3)]
             
         elif material.matType == REFLECTIVE:
             reflect = reflectVector(intercept.normal, nnp.multiply(-1, rayDirection))
@@ -158,11 +159,12 @@ class Raytracer(object):
                         lightDir = [(i*-1) for i in light.direction]
                     elif light.lightType == "Point":
                         lightDir = nnp.sub(light.point, intercept.point)
+                        lightDistance = nnp.norm(lightDir)
                         lightDir = nnp.divTF(lightDir, nnp.norm(lightDir))
                         
                     shadowIntersect = self.rtCastRay(orig=intercept.point, dire=lightDir, sceneObj=intercept.obj)
                     
-                    if shadowIntersect==None:
+                    if shadowIntersect==None or (light.lightType=="Point" and shadowIntersect != None and shadowIntersect.distance > lightDistance):
                         specularColor = [(specularColor[i]+light.getSpecularColor(intercept, self.camPosition)[i]) for i in range(3)]
                         
         elif material.matType == TRANSPARENT:
@@ -184,11 +186,12 @@ class Raytracer(object):
                         shadowDirection = [i * -1 for i in light.direction]
                     if light.lightType == "Point":
                         lightDirection = nnp.sub(light.point, intercept.point)
+                        lightDistance = nnp.norm(lightDirection)
                         shadowDirection = nnp.divTF(lightDirection, nnp.norm(lightDirection))
                         
                     shadowIntersect = self.rtCastRay(intercept.point, shadowDirection, intercept.obj)
 
-                    if shadowIntersect is None:
+                    if shadowIntersect is None or (light.lightType=="Point" and shadowIntersect != None and shadowIntersect.distance > lightDistance):
                         specColor = light.getSpecularColor(intercept, self.camPosition)
                         specularColor = [specularColor[i] + specColor[i] for i in range(3)]
 

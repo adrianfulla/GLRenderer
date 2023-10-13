@@ -41,16 +41,19 @@ glass =  Material(diffuse=(255,255, 255), spec =64, ior = 1.5, ks = 0.02, matTyp
 
 objetos = [
             # Sphere(position=(0,0,-5), radius=1.5, material=haze),
-            OvalSphere(position=(1.5,2,-6), radius=(1.0, 1.0, 1.0), material=haze ),
-            Sphere(position=(-2,0,-7), radius=2, material=mirror ),
-            OvalSphere(position=(-3,0,-10), radius=(1.0, 1.0, 3.0), material=glass ),
+            OvalSphere(position=(0,0,-6), radius=(1.0, 1.0, 1.0), material=haze ),
+            OvalSphere(position=(-2,0,-3), radius=(1.0, 2.0, 1.0), material=mirror ),
+            OvalSphere(position=(5,0,-10), radius=(1.0, 1.0, 3.0), material=glass ),
+            # Sphere(position=(1.5,2,-6), radius=1, material=haze ),
+            # Sphere(position=(-2,0,-7), radius=1, material=mirror ),
+            # Sphere(position=(-3,0,-10), radius=1, material=glass ),
             
             ]
 
 luces = [
-    AmbientLight(intensity=0.5, color=(1,0.8,1)),
-    DirectionalLight(direction=(0,-1,-1), intensity=0.7, color=(1,1,0)),
-    PointLight(point=(0,5,-7), intensity=1, color=(0,1,1))
+    AmbientLight(intensity=0.05, color=(1,0.8,1)),
+    #DirectionalLight(direction=(0,0,-1), intensity=1, color=(1,1,1)),
+    PointLight(point=(0,0,-4.5), intensity=1, color=(1,1,1))
 ]
 
 for objeto in objetos:

@@ -216,7 +216,6 @@ class OvalSphere(Shape):
 
         # Normalize the normal vector
         normal /= np.linalg.norm(normal)
-        normal *= -1
 
         # Calculate texture coordinates (u, v)
         phi = np.arctan2(normal[1], normal[0])
