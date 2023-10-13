@@ -4,12 +4,12 @@ Objetivos:
 - Que los alumnos renderizen una nueva figura a través del RayTracer simple que hemos estado trabajando.
 Para éste lab, tienen que investigar e implementar el Ray Intersect Algorithm de una figura de su elección. La figura puede ser cualquiera de las siguientes opciones:
 
--- Triángulo (puede ser usado después para dibujar modelos)
--- OBBs (oriented bounding boxes)
--- Cilindro
--- Capsula
--- Toroide/dona
--- Esfera ovalada
+  - Triángulo (puede ser usado después para dibujar modelos)
+  - OBBs (oriented bounding boxes)
+  - Cilindro
+  - Capsula
+  - Toroide/dona
+  - Esfera ovalada
 
 
 Condiciones:
@@ -39,11 +39,11 @@ El Rasterizador puede ser ejecutado mediante la ejecución del archivo Main.py, 
  ![Alt text](/Transparent.png)
 
 ## Herramientas Externas
-En este laboratorio se utilizo apoyo de la herramienta externa ChatGPT para crear una clase de figura que pueda modelar una esfera ovalada o un esferoide, esta se encuentra en el clase'''OvalSphere''' dentro de '''figure.py'''. La conversacion fue la siguiente: https://chat.openai.com/share/ba9ba7e4-b456-4853-864c-a01a613e5184
+En este laboratorio se utilizo apoyo de la herramienta externa ChatGPT para crear una clase de figura que pueda modelar una esfera ovalada o un esferoide, esta se encuentra en el clase ```OvalSphere``` dentro de ```figure.py```. La conversacion fue la siguiente: https://chat.openai.com/share/ba9ba7e4-b456-4853-864c-a01a613e5184
 
 En la conversacion se le fue mostrando a ChatGPT como se generaban figuras en el rasterizador actual y en base a esto se le pidio que generara la clase para crear esferoides. El codigo funciona de la siguiente manera:
--Se crea la clase '''OvalSphere''' con los parametros de posicion, radio y material, la diferencia entre el radio de '''OvalSphere''' y de '''Sphere''' es que se pide una tupla de 3 elementos representando el radio en cada eje del esferoide.
--Cuando se realiza la funcion '''ray_intersect''' para el esferoide se normaliza tanto la longitud del punto a la posicion como la direccion por los radios. Luego se obtienen los coeficientes de la ecuacion cuadratica y se calcula el discriminante.
+-Se crea la clase  ```OvalSphere ``` con los parametros de posicion, radio y material, la diferencia entre el radio de  ```OvalSphere ``` y de  ```Sphere ``` es que se pide una tupla de 3 elementos representando el radio en cada eje del esferoide.
+-Cuando se realiza la funcion ```ray_intersect``` para el esferoide se normaliza tanto la longitud del punto a la posicion como la direccion por los radios. Luego se obtienen los coeficientes de la ecuacion cuadratica y se calcula el discriminante.
 -Si el discriminante es menor que 0 entonces se retorna nulo ya que no hay interseccion con el objeto.
 -En cambio, si el discriminante es mayor se procede a encontrar los puntos de interseccion y se determina si el esferoide esta frente a la camara, detras o en medio.
 - Se obtiene el punto sumando el origen con la multiplicacion entre el punto de interseccion mas cercano y la direccion
