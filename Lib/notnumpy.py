@@ -168,3 +168,10 @@ def subtract(arr1, arr2):
             raise ValueError("Arrays must have the same length for subtraction.")
         
     return [a - b for a, b in zip(arr1, arr2)]
+
+def divide(arr1, arr2):
+    if len(arr1) != len(arr2):
+        raise ValueError("Arrays must have the same length for division.")
+
+    result = [a / b for a, b in zip(arr1, arr2)]
+    return result

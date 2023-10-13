@@ -181,15 +181,14 @@ class OvalSphere(Shape):
         
     def ray_intersect(self, orig, direction):
         # Transform the ray to local coordinates
-        l = np.array(np.subtract(orig, self.position), dtype=np.float64)  # Ensure l is float64
-        self.radii = np.array(self.radii, dtype=np.float64)
-        l /= self.radii  # Normalize by the radii
-        direction /= self.radii  # Normalize the ray direction
+        l = nnp.subtract(orig, self.position) # Ensure l is float64
+        l = nnp.divide(l, self.radii)  # Normalize by the radii
+        direction = nnp.divide(direction, self.radii)  # Normalize the ray direction
 
         # Calculate the coefficients of the quadratic equation
-        a = np.dot(direction, direction)
-        b = 2.0 * np.dot(direction, l)
-        c = np.dot(l, l) - 1.0  # The radii are normalized, so this is 1.0
+        a = nnp.dot_product(direction, direction)
+        b = 2.0 * nnp.dot_product(direction, l)
+        c = nnp.dot_product(l, l) - 1.0  # The radii are normalized, so this is 1.0
 
         # Calculate the discriminant
         discriminant = b * b - 4 * a * c
@@ -199,8 +198,8 @@ class OvalSphere(Shape):
             return None
 
         # Calculate the two solutions for t
-        t1 = (-b + np.sqrt(discriminant)) / (2 * a)
-        t2 = (-b - np.sqrt(discriminant)) / (2 * a)
+        t1 = (-b + nnp.sqrt(discriminant)) / (2 * a)
+        t2 = (-b - nnp.sqrt(discriminant)) / (2 * a)
 
         if t1 < 0 and t2 < 0:
             # Both intersections are behind the ray's origin
@@ -208,19 +207,19 @@ class OvalSphere(Shape):
 
         # Use the nearest intersection point
         t = t1 if t1 < t2 else t2
-        p = np.add(orig, np.multiply(t, direction))
+        p = nnp.add(orig, nnp.multiply(t, direction))
 
         # Calculate the normal at the intersection point
-        normal = np.subtract(p, self.position)
-        normal /= self.radii  # Normalize by the radii
+        normal = nnp.subtract(p, self.position)
+        normal = nnp.divide(normal, self.radii)  # Normalize by the radii
 
         # Normalize the normal vector
-        normal /= np.linalg.norm(normal)
+        normal = nnp.divTF(normal, np.linalg.norm(normal))
 
         # Calculate texture coordinates (u, v)
-        phi = np.arctan2(normal[1], normal[0])
-        theta = np.arccos(normal[2])
-        u = 1 - (phi + np.pi) / (2 * np.pi)
-        v = (theta + np.pi / 2) / np.pi
+        phi = atan2(normal[1], normal[0])
+        theta = acos(normal[2])
+        u = 1 - (phi + pi) / (2 * pi)
+        v = (theta + pi / 2) / pi
 
         return Intercept(distance=t, point=p, normal=normal, texcoords=(u, v), obj=self)
