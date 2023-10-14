@@ -27,28 +27,28 @@ screen.set_alpha(None)
 
 raytracer = Raytracer(screen)
 raytracer.envMap = pygame.image.load("Res/City.jpg")
-#skyTexture = pygame.image.load("Res/sky.jpg")
-ballTexture = pygame.image.load("Res/ball_texture.png")
+skyTexture = pygame.image.load("Res/sky.jpg")
+parkingTexture = pygame.image.load("Res/parkinglot.bmp")
 raytracer.rtClearColor(0.25,0.25,0.25)
 
-blanco = Material(diffuse=(255,255,255), spec = 10, ks = 0.02)
+blanco = Material(diffuse=(255,255,255), spec = 10, ks = 0.02, texture=skyTexture)
 # red = Material(diffuse=(255,0,0), spec = 10, ks = 0.02)
 # oro = Material(diffuse=(206,163,96), spec = 256, ks = 0.2, matType=OPAQUE)
 # haze = Material(diffuse=(95,75,139), spec = 32, ks = 0.1)
-mirror = Material(diffuse=(200,200, 200), spec =64, ks = 0.02, matType=REFLECTIVE)
+mirror = Material(diffuse=(200,200, 200), spec =64, ks = 0.02, texture=skyTexture, matType=REFLECTIVE)
 # sky = Material(spec=64, ks=0.1, texture=skyTexture, matType=REFLECTIVE)
 # grass = Material(diffuse=(100,225,100), spec = 46, ks = 0.05)
-glass =  Material(diffuse=(100,255, 255), spec =64, ior = 1.5, ks = 0.02, matType=TRANSPARENT)
+glass =  Material(diffuse=(100,255, 255), spec =64, ior = 1.5, ks = 0.02, texture=parkingTexture, matType=TRANSPARENT)
 # ball = Material(spec=50, ks=0.4, texture=ballTexture, matType=OPAQUE) 
 
 objetos = [
-            OvalSphere(position=(0,0,-6), radius=(2, 0.9, 1.0), material=blanco),
+             OvalSphere(position=(0,0,-6), radius=(2, 0.9, 1.0), material=blanco),
             # OvalSphere(position=(0,0,-6), radius=(2, 0.9, 1.0), material=mirror), #Material Reflectivo
             # OvalSphere(position=(0,0,-6), radius=(2, 0.9, 1.0), material=glass), #Material Transparente
             ]
 
 luces = [
-    AmbientLight(intensity=0.4, color=(1,0.8,1)),
+    AmbientLight(intensity=0.8, color=(1,0.8,1)),
     DirectionalLight(direction=(0,0,-1), intensity=0.2, color=(0.5,1,1)),
     PointLight(point=(-2,1,-4.5), intensity=1, color=(1,1,1))
 ]

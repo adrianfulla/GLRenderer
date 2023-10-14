@@ -110,9 +110,10 @@ class Raytracer(object):
         material = intercept.obj.material
         surfaceColor = material.diffuse
         if material.texture and intercept.texcoords:
-            #intercept.texcoords = (min(1, intercept.texcoords[0]), min(1, intercept.texcoords[1]))   
+            intercept.texcoords = (min(1, intercept.texcoords[0]), min(1, intercept.texcoords[1]))   
             tX = intercept.texcoords[0] * material.texture.get_width() - 1
             tY = intercept.texcoords[1] * material.texture.get_height() - 1
+
             texColor = material.texture.get_at((int(tX), int(tY)))
             texColor = [i / 255 for i in texColor]
             surfaceColor = [surfaceColor[i] * texColor[i] for i in range(3)]
@@ -141,11 +142,11 @@ class Raytracer(object):
                         lightDistance = nnp.norm(lightDir)
                         lightDir = nnp.divTF(lightDir, lightDistance)
                         
-                        shadowIntersect = self.rtCastRay(intercept.point, lightDir, intercept.obj)
-                    
-                        if shadowIntersect==None or (light.lightType=="Point" and shadowIntersect != None and shadowIntersect.distance > lightDistance):
-                            diffuseColor = [(diffuseColor[i]+light.getDiffuseColor(intercept)[i]) for i in range(3)]
-                            specularColor = [(specularColor[i]+light.getSpecularColor(intercept, self.camPosition)[i]) for i in range(3)]
+                    shadowIntersect = self.rtCastRay(intercept.point, lightDir, intercept.obj)
+                
+                    if shadowIntersect==None or (light.lightType=="Point" and shadowIntersect != None and shadowIntersect.distance > lightDistance):
+                        diffuseColor = [(diffuseColor[i]+light.getDiffuseColor(intercept)[i]) for i in range(3)]
+                        specularColor = [(specularColor[i]+light.getSpecularColor(intercept, self.camPosition)[i]) for i in range(3)]
             
         elif material.matType == REFLECTIVE:
             reflect = reflectVector(intercept.normal, nnp.multiply(-1, rayDirection))
