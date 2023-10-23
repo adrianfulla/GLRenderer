@@ -46,10 +46,10 @@ objetos = [
             Cylinder(position=(-10.5,-7.5,-16), radius=0.4, height=0.5, material=cuero), #Tee cuero
             Cylinder(position=(-10.5,-8,-16), radius=0.5, height=0.8, material=negro), #Tee cuero
             AABB(position=(0,-14,-100), size=(175,5,1), material=blanco), #Valla publicitaria
-            AABB(position=(50,-14,-99), size=(20,4,1), material=red), #Valla publicitaria, anuncio
-            AABB(position=(-50,-14,-99), size=(20,4,1), material=red), #Valla publicitaria, anuncio
-            AABB(position=(25,-14,-99), size=(15,4,1), material=glass), #Valla publicitaria, anuncio
-            AABB(position=(0,-14,-99), size=(20,4,1), material=mirror), #Valla publicitaria, anuncio
+            AABB(position=(50,-14,-99.99), size=(20,4,1), material=red), #Valla publicitaria, anuncio
+            AABB(position=(-50,-14,-99.99), size=(20,4,1), material=red), #Valla publicitaria, anuncio
+            AABB(position=(25,-14,-99.99), size=(15,4,1), material=glass), #Valla publicitaria, anuncio
+            AABB(position=(0,-14,-99.99), size=(20,4,1), material=mirror), #Valla publicitaria, anuncio
             Cylinder(position=(-40,-16,-90), radius=1, height=8, material=celeste), #Poste izquierdo, parte inferior
             Cylinder(position=(-5,-16,-90), radius=1, height=8, material=celeste), #Poste derecho, parte inferior
             Cylinder(position=(-40,10,-90), radius=0.6, height=50, material=blanco), #Poste izquierdo, parte superior
