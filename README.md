@@ -27,14 +27,17 @@ El Rasterizador puede ser ejecutado mediante la ejecución del archivo Main.py, 
 
 ## Resultado
 Se tomo de inspiración la siguiente escena:
+
 ![Escena](/escena.jpg)
+
 Esta escena muestra una pelota de rugby sobre un tee viendo hacia los postes H, además se puede observar una valla publicitaria en el fondo.
 La escena se recreo en la siguiente imagen renderizada con el ray tracer trabajado:
+
 ![Resultado](/Resultado.png)
 
 - Se utilizaron un total de 13 figuras
 - Se utilizaron un total de 8 materiales
-- Un anuncio publiciatario del fondo y una parte del tee tienen textura reflectiva
+- Un anuncio publiciatario del fondo y una parte del tee tienen textura reflectiva, el material de la pelota tiene una textura
 - Un anuncio publicitario del fondo tiene textura refractiva
 - Se utiliza un Enviroment Map de un campo
 - Se desarrollaron las figuras de esfera ovalada y cilindro para este proyecto
