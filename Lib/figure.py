@@ -223,3 +223,52 @@ class OvalSphere(Shape):
         v = (theta + pi / 2) / pi
 
         return Intercept(distance=t, point=p, normal=normal, texcoords=(u, v), obj=self)
+
+class Cylinder(Shape):
+    def __init__(self, position, radius, height, material):
+        self.radius = radius
+        self.height = height
+        super().__init__(position, material)
+        
+    def ray_intersect(self, orig, dir):
+        intersect = None
+        t = float('inf')
+        
+        if dir[1] == 0:
+            return None
+        
+        # Check if the ray intersects the top and bottom caps
+        for y in [self.position[1] - self.height / 2, self.position[1] + self.height / 2]:
+            t1 = (y - orig[1]) / dir[1]
+            if t1 > 0:
+                point = nnp.add(orig, nnp.multiply(t1, dir))
+                if nnp.sqrt(point[0] ** 2 + point[2] ** 2) <= self.radius:
+                    if t1 < t:
+                        t = t1
+                        normal = [0, 1 if y == self.position[1] + self.height / 2 else -1, 0]
+                        intersect = Intercept(distance=t, point=point, normal=normal, texcoords=None, obj=self)
+        
+        # Check if the ray intersects the lateral surface
+        a = dir[0] ** 2 + dir[2] ** 2
+        b = 2 * (dir[0] * (orig[0] - self.position[0]) + dir[2] * (orig[2] - self.position[2]))
+        c = (orig[0] - self.position[0]) ** 2 + (orig[2] - self.position[2]) ** 2 - self.radius ** 2
+        discriminant = b ** 2 - 4 * a * c
+        
+        if discriminant >= 0:
+            t2 = (-b - nnp.sqrt(discriminant)) / (2 * a)
+            t3 = (-b + nnp.sqrt(discriminant)) / (2 * a)
+            
+            for t_val in [t2, t3]:
+                if t_val > 0:
+                    point = nnp.add(orig, nnp.multiply(t_val, dir))
+                    if self.position[1] - self.height / 2 <= point[1] <= self.position[1] + self.height / 2:
+                        if t_val < t:
+                            t = t_val
+                            normal = [point[0] - self.position[0], 0, point[2] - self.position[2]]
+                            normal = nnp.divTF(normal, nnp.norm(normal))
+                            intersect = Intercept(distance=t, point=point, normal=normal, texcoords=None, obj=self)
+        
+        if intersect is None:
+            return None
+        
+        return intersect

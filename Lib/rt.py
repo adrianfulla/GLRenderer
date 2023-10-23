@@ -27,7 +27,7 @@ class Raytracer(object):
         self.scene = []
         self.lights = []
         
-        self.camPosition = [0,0,0]
+        self.camPosition = [0,-0.05,0.5]
         
         self.rtViewport(0, 0, self.width, self.height)
         self.rtProyection()
@@ -93,6 +93,9 @@ class Raytracer(object):
     def rtRayColor(self, intercept, rayDirection, recursion = 0):
         if intercept == None:
             if self.envMap:
+                rayDirection = nnp.sub(rayDirection, self.camPosition)
+                rayDirection = nnp.divTF(rayDirection, nnp.norm(rayDirection))
+                
                 x = (atan2(rayDirection[2], rayDirection[0]) / (2*pi) + 0.5) * self.envMap.get_width()
                 y = acos(rayDirection[1]) / pi * self.envMap.get_height()
                 
