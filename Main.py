@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Lab 3: Ray-Intersect Algorithm, New Shapes
+  Proyecto 2: Ray Tracer
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
@@ -42,7 +42,7 @@ glass =  Material(diffuse=(100,255, 255), spec =64, ior = 1.5, ks = 0.02, textur
 # ball = Material(spec=50, ks=0.4, texture=ballTexture, matType=OPAQUE) 
 
 objetos = [
-             OvalSphere(position=(0,0,-6), radius=(2, 0.9, 1.0), material=blanco),
+            # OvalSphere(position=(0,0,-6), radius=(2, 0.9, 1.0), material=blanco),
             # OvalSphere(position=(0,0,-6), radius=(2, 0.9, 1.0), material=mirror), #Material Reflectivo
             # OvalSphere(position=(0,0,-6), radius=(2, 0.9, 1.0), material=glass), #Material Transparente
             ]

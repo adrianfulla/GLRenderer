@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Lab 3: Ray-Intersect Algorithm, New Shapes
+  Proyecto 2: Ray Tracer
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
