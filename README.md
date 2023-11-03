@@ -1,4 +1,4 @@
-# Proyecto 2: Ray Tracer
+# OGL1: 3D Models & Transforms
 Objetivos:
 
 - Que los alumnos preparen el ambiente de desarrollo para su Renderer con OpenGL.
