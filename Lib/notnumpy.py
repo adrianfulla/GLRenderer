@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Proyecto 2: Ray Tracer
+  OGL1: 3D Models & Transforms
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
