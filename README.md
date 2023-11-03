@@ -50,4 +50,6 @@ Una vez terminado el setup podemos proceder a ejecutar el archivo ```Main.py``` 
   ```  
 
 ## Resultado
+![Resultado](/Result.png)
 
+Esta imagen muestra el modelo de un vaso en el centro del cuadro, con las teclas ```wasd``` se puede rotar y girar el modelo y con las flechas se pueden modificar los colores del fondo.
