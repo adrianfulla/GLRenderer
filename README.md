@@ -13,9 +13,11 @@ Objetivos cumplidos:
 - Implementar el uso de texturas y UVs para renderizar el modelo 3D con su textura correspondiente.
 - El modelo debe mostrarse en medio de la pantalla.
 
+## Setup
+La ejecución del programa requiere la creación de un ambiente virtual de python en 32 bits para poder ser ejecutado, 
 
 ## Inicialización
-El Rasterizador puede ser ejecutado mediante la ejecución del archivo Main.py, dentro de una ventana de shell, navegar al directorio donde se encuentran los archivos y correr el siguiente comando:
+El Rasterizador requiere de :
   ```bash
     python3 Main.py
   ```  

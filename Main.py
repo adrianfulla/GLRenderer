@@ -18,12 +18,25 @@ from Lib.model import Model
 from Lib.shaders import *
 from Lib.obj import Obj
 
+def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
+    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+    filledLength = int(length * iteration // total)
+    bar = fill * filledLength + '-' * (length - filledLength)
+    print(f'\r{prefix} |{bar}| {percent}% {suffix}', end = printEnd)
+    # Print New Line on Complete
+    if iteration == total: 
+        print()
+
+printProgressBar(0, 4, prefix = 'Progreso: ', suffix = 'Completado: Iniciando', length = 50)
+
 width = 960
 height = 540
 
 pygame.init()
 screen = pygame.display.set_mode((width, height), pygame.OPENGL | pygame.DOUBLEBUF)
 clock = pygame.time.Clock()
+
+printProgressBar(1, 4, prefix = 'Progreso: ', suffix = 'Completado: Creacion de ambiente    ', length = 50)
 
 renderer = Renderer(screen)
 renderer.setShader(vertex_shader, fragment_shader)
@@ -57,6 +70,7 @@ for face in obj.faces:
             uv = [uv[0], uv[1]]
             objData.extend(vertex + uv + normals)
 
+printProgressBar(2, 4, prefix = 'Progreso: ', suffix = 'Completado: Creacion de modelo   ', length = 50)
 
 model = Model(objData)
 model.loadTexture("Res/Textures/cup.bmp")
@@ -65,6 +79,10 @@ model.position.y = -1
 model.scale = glm.vec3(1, 1, 1)
 
 renderer.scene.append(model)
+
+printProgressBar(3, 4, prefix = 'Progreso: ', suffix = 'Completado: Cargado de modelo    ', length = 50)
+
+printProgressBar(4, 4, prefix = 'Progreso: ', suffix = 'Completado: Terminado          ', length = 50)
 
 isRunning = True
 while isRunning:
@@ -93,6 +111,7 @@ while isRunning:
         model.rotation.x += deltaTime * 50
     if keys[K_s]:
         model.rotation.x -= deltaTime * 50
+
 
 
     for event in pygame.event.get():
