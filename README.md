@@ -37,6 +37,7 @@ Una vez instalada la libreria se procede a crear el ambiente virtual, para esto 
 ```bash
     C:\direcion\repositorio\GLRenderer myenv/scripts/activate
   ```
+### Librerias
 Esto activará el ambiente virtual y procedemos a instalar las siguientes librerias, para esto utilizaremos el archivo ```requirements.txt``` que incluye las librerias necesarias y sus versiones
 ```bash
     C:\direcion\repositorio\GLRenderer C:\direccion\al\python\32bits\python.exe -m pip install -r requirements.txt
