@@ -1,17 +1,9 @@
-# OGL1: 3D Models & Transforms
+# Lab 4: Shaders II
 Objetivos:
 
-- Que los alumnos preparen el ambiente de desarrollo para su Renderer con OpenGL.
-- Que los alumnos implementen las transformaciones necesarias para mover objectos en la escena con una cámara en perspectiva.
+El objetivo de este laboratorio es que practiquen la creación de shaders (tanto Vertex como Fragment) en base a GLSL y para uso en un renderer hecho en OpenGL.
 
-
-Objetivos cumplidos:
-
-- Código fuente de un renderer simple usando OpenGL.
-- Implementar el código necesario para leer un archivo OBJ y renderizarlo en la pantalla.
-- Implementar el uso de matrices de modelo, vista y proyección en el Vertex Shader.
-- Implementar el uso de texturas y UVs para renderizar el modelo 3D con su textura correspondiente.
-- El modelo debe mostrarse en medio de la pantalla.
+Para este lab, tienen que crear distintas variaciones de shaders y mostrar los resultados en un sólo modelo de su elección usando su renderer. Deben usar las teclas numéricas (1, 2, 3...) para cambiar la configuración de shaders durante la ejecución del programa. La nota de los criterios subjetivos dependerá de qué tan complejos e interesantes sean los shaders que implementen.
 
 ## Requisitos
 - Python 32 bits, versión [3.11.6](https://www.python.org/ftp/python/3.11.6/python-3.11.6.exe)
@@ -50,6 +42,4 @@ Una vez terminado el setup podemos proceder a ejecutar el archivo ```Main.py``` 
   ```  
 
 ## Resultado
-![Resultado](/Result.png)
 
-Esta imagen muestra el modelo de un vaso en el centro del cuadro, con las teclas ```wasd``` se puede rotar y girar el modelo y con las flechas se pueden modificar los colores del fondo.
