@@ -34,6 +34,9 @@ class Renderer(object):
         )
         self.elapsedTime = 0.0
 
+        self.dirLight = glm.vec3(1, 0, 0)
+        self.lightIntensity = 1.0
+
         glEnable(GL_DEPTH_TEST)
         glViewport(0, 0, self.width, self.height)
 
@@ -78,6 +81,15 @@ class Renderer(object):
             glUniform1f(
                 glGetUniformLocation(self.activeShader, "time"),
                 self.elapsedTime
+            )
+            glUniform3fv(
+                glGetUniformLocation(self.activeShader, "dirLight"),
+                1,
+                glm.value_ptr(self.dirLight)
+            )
+            glUniform1f(
+                glGetUniformLocation(self.activeShader, "lightIntensity"),
+                self.lightIntensity
             )
 
         for obj in self.scene:

@@ -75,10 +75,11 @@ printProgressBar(2, 4, prefix = 'Progreso: ', suffix = 'Completado: Creacion de 
 model = Model(objData)
 model.loadTexture("Res/Textures/cup.bmp")
 model.position.z = -6
-model.position.y = -1
+model.position.y = 0
 model.scale = glm.vec3(1, 1, 1)
-
 renderer.scene.append(model)
+renderer.lightIntensity = 5.5
+renderer.dirLight = glm.vec3(0.0, -1.0, -1.0)
 
 printProgressBar(3, 4, prefix = 'Progreso: ', suffix = 'Completado: Cargado de modelo    ', length = 50)
 
@@ -113,16 +114,29 @@ while isRunning:
         model.rotation.x -= deltaTime * 50
 
 
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             isRunning = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 isRunning = False
+            if event.key == pygame.K_1:
+                print("Original")
+                renderer.setShader(vertex_shader, fragment_shader)
+            if event.key == pygame.K_2:
+                print("Gourad")
+                renderer.setShader(vertex_shader, gourad_fragment_shader)
+            if event.key == pygame.K_3:
+                print("Cell")
+                renderer.setShader(vertex_shader, cell_fragment_shader)
+            if event.key == pygame.K_4:
+                print("Multicolor")
+                renderer.setShader(vertex_shader, multicolor_fragment_shader)
+            if event.key == pygame.K_5:
+                print("Candy Cane")
+                renderer.setShader(vertex_shader, candy_cane_fragment_shader)
 
     renderer.render()
     pygame.display.flip()
 
 pygame.quit()
-

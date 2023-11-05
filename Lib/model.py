@@ -20,8 +20,8 @@ from numpy import array, float32
 class Model(object):
     def __init__(self, data):
         self.vertexBuffer = array(data, dtype=float32)
-        self.VBO = glGenBuffers(1)  #Vertex Buffer Object
-        self.VAO = glGenVertexArrays(1)  #Vertex Array Object
+        self.VBO = glGenBuffers(1) 
+        self.VAO = glGenVertexArrays(1) 
         self.position = glm.vec3(0.0, 0.0, 0.0)
         self.rotation = glm.vec3(0.0, 0.0, 0.0)
         self.scale = glm.vec3(1.0, 1.0, 1.0)
@@ -55,7 +55,6 @@ class Model(object):
                      self.vertexBuffer, 
                      GL_STATIC_DRAW)
 
-        #Positions: Attribute number, size, type, normalized, stride, offset
         glVertexAttribPointer(0, 
                               3, 
                               GL_FLOAT, 
@@ -64,7 +63,6 @@ class Model(object):
                               ctypes.c_void_p(0))
         glEnableVertexAttribArray(0)
 
-        #TexCoords
         glVertexAttribPointer(1, 
                               2, 
                               GL_FLOAT, 
@@ -73,21 +71,21 @@ class Model(object):
                               ctypes.c_void_p(4 * 3))
         glEnableVertexAttribArray(1)
 
-        #Texture
         glActiveTexture(GL_TEXTURE0)
         glBindTexture(GL_TEXTURE_2D, self.textureBuffer)
         glTexImage2D(
-            GL_TEXTURE_2D,  #Texture Type
-            0,  #Position
-            GL_RGB,  #Format
-            self.textureSurface.get_width(),  #Width
-            self.textureSurface.get_height(),  #Height
-            0,  #Border
-            GL_RGB,  #Format
-            GL_UNSIGNED_BYTE,  #Type
-            self.textureData  #Data
+            GL_TEXTURE_2D,  
+            0,  
+            GL_RGB,  
+            self.textureSurface.get_width(),  
+            self.textureSurface.get_height(),  
+            0,  
+            GL_RGB,  
+            GL_UNSIGNED_BYTE,  
+            self.textureData  
         )
         glGenerateTextureMipmap(self.textureBuffer)
+
 
         #Normals
         glVertexAttribPointer(2, 
@@ -96,6 +94,8 @@ class Model(object):
                               GL_FALSE, 
                               4 * 8, 
                               ctypes.c_void_p(4 * 5))
+        
+        glEnableVertexAttribArray(2)
 
         #Draw
         glDrawArrays(GL_TRIANGLES, 0, len(self.vertexBuffer) // 8)

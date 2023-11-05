@@ -42,4 +42,4 @@ Una vez terminado el setup podemos proceder a ejecutar el archivo ```Main.py``` 
   ```  
 
 ## Resultado
-
+![Result]("/Result.jpg")
