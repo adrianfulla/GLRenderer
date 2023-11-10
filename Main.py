@@ -13,6 +13,7 @@
 import pygame
 import glm
 from pygame.locals import *
+import time
 from Lib.renderer import Renderer
 from Lib.model import Model
 from Lib.shaders import *
@@ -86,6 +87,7 @@ printProgressBar(3, 4, prefix = 'Progreso: ', suffix = 'Completado: Cargado de m
 printProgressBar(4, 4, prefix = 'Progreso: ', suffix = 'Completado: Terminado          ', length = 50)
 
 isRunning = True
+current_time = time.time()
 while isRunning:
     deltaTime = clock.tick(60) / 1000.0
     renderer.elapsedTime += deltaTime
@@ -135,6 +137,15 @@ while isRunning:
             if event.key == pygame.K_5:
                 print("Candy Cane")
                 renderer.setShader(vertex_shader, candy_cane_fragment_shader)
+            if event.key == pygame.K_6:
+                print("Glitch Effect")
+                renderer.setShader(glitch_vertex_shader, fragment_shader)
+            if event.key == pygame.K_7:
+                print("Color Shift Effect")
+                renderer.setShader(vertex_shader, color_shift_fragment_shader)
+            if event.key == pygame.K_8:
+                print("Moving Effect")
+                renderer.setShader(moving_vertex_shader, gourad_fragment_shader)
 
     renderer.render()
     pygame.display.flip()
