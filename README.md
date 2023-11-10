@@ -42,4 +42,16 @@ Una vez terminado el setup podemos proceder a ejecutar el archivo ```Main.py``` 
   ```  
 
 ## Resultado
-![Resultado](/Result.png)
+Shaders Realizados:
+
+Candy Cane - Fragment Shader
+![Resultado](/Candy_Cane.gif)
+
+Color Shift - Fragment Shader
+![Resultado](/Color_shift.gif)
+
+Glitch effect - Vertex Shader
+![Resultado](/Glitch_Shader.gif)
+
+Rotating effect - Vertex Shader
+![Resultado](/Rotating_effect.gif)
