@@ -48,10 +48,10 @@ Candy Cane - Fragment Shader
 ![Resultado](/Candy_Cane.gif)
 
 Color Shift - Fragment Shader
-![Resultado](/Color_shift.gif)
+![Resultado](/Color_Shift.gif)
 
 Glitch effect - Vertex Shader
-![Resultado](/Glitch_Shader.gif)
+![Resultado](/Glitch_Shader.png)
 
 Rotating effect - Vertex Shader
 ![Resultado](/Rotating_effect.gif)
