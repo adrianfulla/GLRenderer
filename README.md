@@ -1,9 +1,13 @@
-# Lab 4: Shaders II
-Objetivos:
+# Proyecto 3: OpenGL
+## Objetivos:
 
-El objetivo de este laboratorio es que practiquen la creación de shaders (tanto Vertex como Fragment) en base a GLSL y para uso en un renderer hecho en OpenGL.
+El objetivo de éste proyecto es demostrar los conocimientos adquiridos a lo largo del semestre.
 
-Para este lab, tienen que crear distintas variaciones de shaders y mostrar los resultados en un sólo modelo de su elección usando su renderer. Deben usar las teclas numéricas (1, 2, 3...) para cambiar la configuración de shaders durante la ejecución del programa. La nota de los criterios subjetivos dependerá de qué tan complejos e interesantes sean los shaders que implementen.
+Los alumnos deben entregar un visualizador de modelos creado en base al renderer de OpenGL que se trabajó en clase.
+
+La nota máxima es de 100 puntos. Se entregarán los siguientes puntos por cada uno de los objetivos que se cumplan. Pueden escoger los objetivos que quieran. No hay puntos extra.
+
+### Objetivos cumplidos:
 
 ## Requisitos
 - Python 32 bits, versión [3.11.6](https://www.python.org/ftp/python/3.11.6/python-3.11.6.exe)
@@ -42,16 +46,4 @@ Una vez terminado el setup podemos proceder a ejecutar el archivo ```Main.py``` 
   ```  
 
 ## Resultado
-Shaders Realizados:
 
-Candy Cane - Fragment Shader
-![Resultado](/Candy_Cane.gif)
-
-Color Shift - Fragment Shader
-![Resultado](/Color_Shift.gif)
-
-Glitch effect - Vertex Shader
-![Resultado](/Glitch_Shader.png)
-
-Rotating effect - Vertex Shader
-![Resultado](/Rotating_effect.gif)
