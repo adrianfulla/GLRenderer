@@ -25,6 +25,7 @@ class Renderer(object):
         #View Matrix
         self.cameraPosition = glm.vec3(0.0, 0.0, 0.0)
         self.cameraRotation = glm.vec3(0.0, 0.0, 0.0)
+        self.target = glm.vec3(0.0, 0.0, 0.0)
         #Projection Matrix
         self.projectionMatrix = glm.perspective(
             glm.radians(60.0),  #FOV
@@ -49,6 +50,13 @@ class Renderer(object):
         translateMatrix = glm.translate(identity, self.cameraRotation)
         cameraMatrix = translateMatrix * rotateMatrix
         return glm.inverse(cameraMatrix)
+    
+    def updateViewMatrix(self):
+        self.viewMatrix = glm.lookAt(
+            self.cameraPosition,
+            self.target,
+            glm.vec3(0.0, 1.0, 0.0)
+        )
 
     def setShader(self, vertex_shader=None, fragment_shader=None):
         if vertex_shader is None and fragment_shader is None:
@@ -58,6 +66,9 @@ class Renderer(object):
                 compileShader(vertex_shader, GL_VERTEX_SHADER),
                 compileShader(fragment_shader, GL_FRAGMENT_SHADER)
             )
+            
+    def loadEnviromentMap(self, textureFile):
+        self.envMap = Skybox(textureFile=textureFile)
 
     def render(self):
         glClearColor(*self.clearColor)
