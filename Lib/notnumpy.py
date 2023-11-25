@@ -5,7 +5,7 @@
   Graficas por Computadora.
   Sección: 20
 
-  Rt1: Spheres, Material & Phong Shading
+  Proyecto 3: OpenGL
 
   @version 1.0
   @author Adrian Fulladolsa Palma | Carne 21592
@@ -93,8 +93,8 @@ def add(v1, v2):
         if len(v1) != len(v2):
             raise ValueError("Tuples must have the same length.")
         
-        subtracted_tuple = tuple(a + b for a, b in zip(v1, v2))
-        return subtracted_tuple    
+        added_tuple = tuple(a + b for a, b in zip(v1, v2))
+        return added_tuple    
     
 
 def norm(x, ord=None, axis=None, keepdims=False):
@@ -160,7 +160,7 @@ def dot_product(array1, array2):
         dot_product = sum(a * b for a, b in zip(array1, array2))
         return dot_product
     
-def multiply(i, arr):
+def multiply(i = 1 , arr = [1]):
     return [i * x for x in arr]
 
 def subtract(arr1, arr2):
@@ -168,3 +168,10 @@ def subtract(arr1, arr2):
             raise ValueError("Arrays must have the same length for subtraction.")
         
     return [a - b for a, b in zip(arr1, arr2)]
+
+def divide(arr1, arr2):
+    if len(arr1) != len(arr2):
+        raise ValueError("Arrays must have the same length for division.")
+
+    result = [a / b for a, b in zip(arr1, arr2)]
+    return result
