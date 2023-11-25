@@ -74,32 +74,33 @@ def loadModel(object):
                 objData.extend(vertex + uv + normals)
     return objData
 
-def printMenu():
-    print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    print("Welcome to the 3D model viewer! To see this menu again, press M.")
-    print("We recommend you volume up your speakers to enjoy the experience!")
+menu = ''' Visualizador de Modelos 30
+Menu:
 
-    print("\nModels available:")
-    print("\t- A cute ducky plush (press 1)")
-    print("\t- A cute litle octopus (press 2)")
-    print("\t- A shiny diamond (press 3)")
-    print("\t- A cute kitty plush (press 4)")
-    print("\t\t* If you have the kitty on your screen, press 9 and 0 for a surprise!")
+    Controles:
+        - Flechas para rotar el modelo
+        - Teclas de + y - o rueda de mouse para acercar o alejar el modelo
+        - Tecla m para volver a ver el menu
+        
+    Modelos:
+        1. Un toro dorado
+        2. Un pinguino
+        3. La estatua del David
+        4. Un vaso
 
-    print("\nShaders available:")
-    print("\t- Original shader (press n)")
-    print("\t- Party shader (press p)")
-    print("\t- Sparkling shader (press s)")
-    print("\t- Distorsioned shader (press d)")
-    print("\t- Outline shader (press o)")
-    print("\t\t* If you have a shader on your screen, press a for se the alternative version!")
+    Shaders:
+        Q. Shaders Originales
+        W. Candy Cane fragment shader
+        E. Moving effect vertex shader
+        R. Glitch Effect Vertex Shader
+        T. Color Shift Fragment Shader
+        
+        A. Se puede visualizar una version alternativa del shader selecto
+        S. Se aleatorizan los shaders
+    
+Disfute el visualizador de modelos 3d!!!!!!
 
-    print("\nControls:")
-    print("\t- Use the arrow keys to rotate the model")
-    print("\t- Use the + and - keys to move the model closer or farther")
-    print("\t- Use the mouse wheel to zoom in and out")
-    print("\t- Use the mouse to rotate the camera around the model")
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+'''
 
 obj = Obj("Res/Models/Penguin.obj")
 objData = loadModel(obj)
@@ -125,7 +126,7 @@ angle = 0.0
 
 isRunning = True
 current_time = time.time()
-printMenu()
+print(menu)
 while isRunning:
     deltaTime = clock.tick(60) / 1000.0
     renderer.elapsedTime += deltaTime
@@ -200,7 +201,7 @@ while isRunning:
                     print("Color Shift alternative shader")
                     swooshSound.play()
                     renderer.setShader(vertex_shader, color_shift_alt_fragment_shader)
-            if event.key == pygame.K_b:
+            if event.key == pygame.K_s:
                 random.seed(int(time.time()))
                 randFragment = random.randint(1, 5)
                 randVertex = random.randint(1, 5)
@@ -240,7 +241,7 @@ while isRunning:
                 renderer.setShader(vertex, fragment)
                 
             if event.key == pygame.K_1:
-                print("A bull has appeared!")
+                print("Llego el Toro!")
                 thumpSound.play()
                 renderer.scene.clear()
                 obj = Obj("Res/models/bull.obj")
@@ -255,7 +256,7 @@ while isRunning:
                 renderer.scene.append(model)
                 
             if event.key == pygame.K_2:
-                print("The penguin returns!")
+                print("El retorno del pinguino!")
                 shiftSound.play()
                 renderer.scene.clear()
                 obj = Obj("Res/Models/Penguin.obj")
@@ -270,7 +271,7 @@ while isRunning:
                 renderer.scene.append(model)
                 
             if event.key == pygame.K_3:
-                print("Class time, statue is here!")
+                print("Se aparece la estatua!")
                 shiftSound.play()
                 renderer.scene.clear()
                 obj = Obj("Res/Models/statue.obj")
@@ -284,7 +285,7 @@ while isRunning:
                 model.scale = glm.vec3(1, 1, 1)
                 renderer.scene.append(model)
             if event.key == pygame.K_4:
-                print("Ominous cup")
+                print("El vaso lo ve todo, el vaso es el todo")
                 shiftSound.play()
                 renderer.scene.clear()
                 obj = Obj("Res/Models/cup.obj")
@@ -297,56 +298,13 @@ while isRunning:
                 model.rotation.y = 0
                 model.scale = glm.vec3(1, 1, 1)
                 renderer.scene.append(model)
+                
+            if event.key == pygame.K_m:
+                print(menu)
         
         elif event.type == pygame.MOUSEWHEEL:
             if (model.position.z <= 0) and (model.position.z >= -10):
                 model.position.z += (0.1 * event.y)
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 1: 
-                drag = True
-                oldPosition = pygame.mouse.get_pos()
-
-            elif event.button == 4:
-                if radius > distance * 0.5:
-                    radius -= zoom_sensitive             
-
-            elif event.button == 5:
-                if radius < distance * 1.5:
-                    radius += zoom_sensitive
-                    
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 1: 
-                drag = True
-                oldPosition = pygame.mouse.get_pos()
-
-            elif event.button == 4:
-                if radius > distance * 0.5:
-                    radius -= zoom_sensitive             
-
-            elif event.button == 5:
-                if radius < distance * 1.5:
-                    radius += zoom_sensitive
-
-        elif event.type == pygame.MOUSEBUTTONUP:
-            if event.button == 1:  
-                drag = False
-
-        elif event.type == pygame.MOUSEMOTION:
-            if drag:
-                new_position = pygame.mouse.get_pos()
-                deltax = new_position[0] - oldPosition[0]
-                deltay = new_position[1] - oldPosition[1]
-                angle += deltax * -sens_x
-
-                if angle > 360:
-                    angle = 0
-
-                if distance > renderer.cameraPosition.y + deltay * -sens_y and distance * -1.5 < renderer.cameraPosition.y + deltay * -sens_y:
-                    renderer.cameraPosition.y += deltay * -sens_y
-
-                oldPosition = new_position
-
-
 
     renderer.updateViewMatrix()
     renderer.render()
