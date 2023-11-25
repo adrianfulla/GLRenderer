@@ -14,10 +14,13 @@ La nota máxima es de 100 puntos. Se entregarán los siguientes puntos por cada 
 - 5 puntos, Zoom In y Zoom out de la cámara, con un límite de cuanto se puede acercar o cuanto se puede alejar.
     - Se puede realizar con la rueda del mouse
 - 0 - 30 puntos según uso creativo de shaders (iluminación compleja, usar input para variar algún valor dentro del shader, uso de mapas normales, toon shading, etc...)
+    - 2 vertex shaders y sus variantes
+    - 2 fragment shaders y sus variantes
 - 0 - 20 puntos según características extras que el alumno agregue al programa (menús, música o efectos de sonido, imagen de fondo, etc)
-    - Menu en shell
+    - Menu
     - Musica de ambiente
     - Efectos de sonido al cambiar modelo o shaders
+    - Opcion para aleatorizacion de shaders
 
 ## Requisitos
 - Python 32 bits, versión [3.11.6](https://www.python.org/ftp/python/3.11.6/python-3.11.6.exe)
@@ -56,4 +59,5 @@ Una vez terminado el setup podemos proceder a ejecutar el archivo ```Main.py``` 
   ```  
 
 ## Resultado
+[Video](https://youtu.be/urnLFOPvQyg)
 
