@@ -8,6 +8,16 @@ Los alumnos deben entregar un visualizador de modelos creado en base al renderer
 La nota máxima es de 100 puntos. Se entregarán los siguientes puntos por cada uno de los objetivos que se cumplan. Pueden escoger los objetivos que quieran. No hay puntos extra.
 
 ### Objetivos cumplidos:
+- 4 modelos
+- 5 puntos, movimiento circular al rededor del modelo, enfocado siempre en el modelo.
+- 5 puntos, movimiento de la cámara hacia arriba y hacia abajo, pero siempre enfocado en el modelo. Tiene que tener un límite.
+- 5 puntos, Zoom In y Zoom out de la cámara, con un límite de cuanto se puede acercar o cuanto se puede alejar.
+    - Se puede realizar con la rueda del mouse
+- 0 - 30 puntos según uso creativo de shaders (iluminación compleja, usar input para variar algún valor dentro del shader, uso de mapas normales, toon shading, etc...)
+- 0 - 20 puntos según características extras que el alumno agregue al programa (menús, música o efectos de sonido, imagen de fondo, etc)
+    - Menu en shell
+    - Musica de ambiente
+    - Efectos de sonido al cambiar modelo o shaders
 
 ## Requisitos
 - Python 32 bits, versión [3.11.6](https://www.python.org/ftp/python/3.11.6/python-3.11.6.exe)
