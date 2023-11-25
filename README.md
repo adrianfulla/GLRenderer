@@ -59,5 +59,5 @@ Una vez terminado el setup podemos proceder a ejecutar el archivo ```Main.py``` 
   ```  
 
 ## Resultado
-[Video](https://youtu.be/urnLFOPvQyg)
+[Video en YouTube](https://youtu.be/urnLFOPvQyg)
 
